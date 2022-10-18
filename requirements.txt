@@ -1,0 +1,3 @@
+pelican
+bs4
+markdown

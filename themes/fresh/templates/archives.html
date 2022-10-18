@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% block title %}Archives for {{ SITENAME }}{% endblock %}
+{% block ogtitle %}Archives for {{ SITENAME }}{% endblock %}
+{% block ogurl %}{{ SITEURL }}/archives.html{%endblock%}
+{% block canonicalurl %}{{ SITEURL }}/archives.html{%endblock%}
+
+{% block content %}
+<div class="span9">
+    <section>
+    <h1>{% block content_title %}Archives for {{ SITENAME }}{% endblock %}</h1>
+
+    {% for article in dates %}
+        {% set this_year = article.date.strftime('%Y') %}
+        {% set this_month = article.date.strftime('%b') %}
+        {% set this_day = article.date.strftime('%d') %}
+        {% if article.date.year != dates[loop.index0 - 1].date.year %}
+        <div class="row-fluid archive_row">
+            <div class="span1 archive_year">{{ this_year }}</div>
+        </div>
+        {% endif %}
+        <ul>
+            <li><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></li>
+        </ul>
+    {% endfor %}
+    </section>
+</div>
+{% endblock %}

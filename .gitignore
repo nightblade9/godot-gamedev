@@ -1,0 +1,4 @@
+bin
+output
+**/*.pyc
+__pycache__

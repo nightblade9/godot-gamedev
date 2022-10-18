@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Eman Quest Restrospective: A Procedural RPG in a Month · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Eman Quest Restrospective: A Procedural RPG in a Month" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://i.imgur.com/Nu9doZ9.jpg" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2018/eman-quest-restrospective-a-procedural-rpg-in-a-month.html" />
+    <meta property="og:description" content="This month, I set out with a very specific goal: create a 2D procedurally-generated RPG; something I&#39;ve never heard of (or done before). Although I ran out of time, I plan to devote another month to the game. This retrospective discusses the good, the bad, and the work ahead of …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2018-09-28" />
+    <meta property="article:section" content="Devlog" />
+    <meta property="article:tag" content="Retrospective" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2018/eman-quest-restrospective-a-procedural-rpg-in-a-month.html">Eman Quest Restrospective: A Procedural RPG in a Month</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a>
+      <b> · </b>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/retrospective.html">Retrospective</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">09</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">28</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p><img alt="screenshot of a hero facing a boss" src="https://i.imgur.com/Nu9doZ9.jpg"></p>
+<p>This month, I set out with a very specific goal: create a 2D procedurally-generated RPG; something I've never heard of (or done before). Although I ran out of time, I plan to devote another month to the game. This retrospective discusses the good, the bad, and the work ahead of us.</p>
+<h2>Goal: What is a Procedurally-Generated RPG?</h2>
+<p>I grew up playing Secret of Mana, Final Fantasy, Chrono Trigger, and other great titles. One day, I thought to myself, <em>what if I can only create one more game before I die? What would I create?</em></p>
+<p>The answer? Something akin to those favourites; a game that generates a <em>brand new,</em> quality RPG, <em>every time you plan.</em> I spent some weeks brainstorming what I needed and didn't need, plans to create content such as monsters, weapons, etc. Some things clearly need to be procedurally-generated (such as dungeons and maps), while others don't (such as enemy sprites and player skills).</p>
+<p>A couple of false-starts later, I finally opened up the Godot editor and started the third (or fourth) attempt.</p>
+<h2>The Good: What Went Well</h2>
+<p>Initially, I focued on the <em>technical</em> side of procedural generation: creating stuff! As of writing, the game:</p>
+<ul>
+<li>Generates a new, persistent world map each time; this includes a river that runs into a small lake, and randomly-positioned dungeon entrances</li>
+<li>A procedurally-generated forest dungeon; it's a single, large map, with trees, dirt paths, monsters, and a boss.</li>
+<li>Procedurally-generated equipment (weapons and armour), each with unique stats modifiers</li>
+<li>Loot in the form of treasure chests in the forest dungeon.</li>
+<li>The story. While very basic, the game generates the intro plot text, including the town name and final enemy type</li>
+</ul>
+<p>The forest dungeon took longer than expected. On the technical side, I figured out how to make Godot generate and persist my maps/game; initially with packed scenes (which got garbage-collected when I changed scenes, causing crashes), and later by separating the generation of game data from the presentation (populating scenes/tilemaps/etc. from content).</p>
+<p>Solving technical issues aside, I also spent too much time on what didn't go so well: the battle engine.</p>
+<h2>The Bad: What Could've Been Better</h2>
+<p>I find the concept of memory games fascinating (as an ex-Lumosity player). An Extra Credits video on <a href="https://www.youtube.com/watch?v=oEDVDhOYJ2I">puzzle vs. reflex mechanics</a> challenged me to introduce something new into my game.</p>
+<p>At the heart of every RPG, in terms of fun gameplay, lies a fun and challenging battle system. I decided to design a memory-based battle system:</p>
+<p><img alt="battle engine animation" src="https://i.imgur.com/vln27Un.gif"></p>
+<p>This probably proved to be my undoing. I spent several days designing, balancing, and tweaking the battle engine; adding new features, action types, and skills. Five beta testers provided feedback after trying it out:</p>
+<ul>
+<li>One really liked it</li>
+<li>One said it's okay and could be improved</li>
+<li>Three others didn't like it</li>
+</ul>
+<p>In the end, after several days, I forced myself to stop tweaking/changing it and decided to focus on fulfilling the rest of the game.</p>
+<p>Last, and perhaps worst, the game <em>feels</em> incomplete. Sure, you get a randomly-generated forest; but even with the intended scope for the end of the month (two dungeons with two different variations, including unique monsters), it might not be enough to give players that experience of a procedurally-generated RPG.</p>
+<h2>What's Next</h2>
+<p>I don't intend to give up; I plan to fill out and ship a version of this game (although with what functionality/content remains to be seen). My current plan of action looks like:</p>
+<ul>
+<li>Finish the end-game sequence so players can actually complete the game</li>
+<li>Create two variants on the forest (frost forest and death forest) each with unique enemies</li>
+<li>Create a second dungeon (cave) with two variants (one is a volcano)</li>
+</ul>
+<p>Finally, I plan to create a <em>proper RPG world.</em> A good RPG, like a good novel, contains elements that all harmonize and work together to communicate a singular world/message. Right now, we have a patch of hastily-named enemies, skills, etc. and these need to be brought together.</p>
+<p>More specifically, I didn't yet start the other hard/fun part of a procedural RPG: creating a procedural world (and story) that feels unique. This includes a unique/different protagonist for each story.</p>
+<p>Finally, another round of beta testing should reveal whether the game is interesting/fun or not, and I should either finish it as-is or if I need to rewrite/rethink battles entirely. Time will tell. September may be almost gone, but October brings another month brimming with potential for me to see this game through to its potential.</p>
+<p>If you're interested in following my development on this project, feel free to <a href="https://twitter.com/nightblade99">follow me on Twitter</a>. </p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2018/creating-tilemaps-with-tile-entities-in-godot.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

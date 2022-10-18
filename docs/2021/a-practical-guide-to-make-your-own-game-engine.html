@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>A Practical Guide to Make Your Own Game Engine · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="A Practical Guide to Make Your Own Game Engine" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2021/a-practical-guide-to-make-your-own-game-engine.html" />
+    <meta property="og:description" content="Want to make games faster, bigger, and with better quality, while investing the same amount of time? It&#39;s possible, albeit with an unintuitive solution: a custom game engine. I&#39;m here to tell you why you can, and should, build a custom game engine. It&#39;s 2021, and lots of strong, general-purpose …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2021-07-23" />
+    <meta property="article:section" content="Game Development" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2021/a-practical-guide-to-make-your-own-game-engine.html">A Practical Guide to Make Your Own Game Engine</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2021">2021</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2021Month07">07</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2021Month07">23</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p>Want to make games faster, bigger, and with better quality, while investing the same amount of time? It's possible, albeit with an unintuitive solution: a custom game engine. I'm here to tell you why you can, and should, build a custom game engine.</p>
+<p>It's 2021, and lots of strong, general-purpose game engines abound: from Unreal to Godot to GameMaker to Construct, tools exist for beginner and experienced developers alike. Why bother making your own game engine?</p>
+<p>It's a great learning tool, sure, but a better reason exists: you can <em>customize your game engine to your own personal style and workflow.</em></p>
+<p>A great example of this is RPG Maker, which specializes in making JRPG games. Using RPG Maker, you can - very quickly, and without much coding skill - create large-scale and complex JRPGs. RPG Maker includes events for all kinds of common JRPG things (dialog, shops, inns, quest NPCs, etc.) which makes it very, very fast to build, compared to building something from scratch.</p>
+<p>Even if you think this isn't a great idea, I guarantee you will learn a ton by doing this. If you're convinced, read on.</p>
+<h2>Pick a Small Target</h2>
+<p>You're not planning to build a general-purpose, large-scale game engines. Those are difficult, and require <a href="https://www.gamedesigning.org/learn/make-a-game-engine/">lots of different skillls</a> which you may not have.</p>
+<p>First, identify an existing game engine, framework, library, toolkit, etc. that you use and like. What's great about it? Importantly, what's not good about it? Where can you improve upon it, or what pain-points does it inflict on you that you wish you could work around?</p>
+<p>Once you identified your starting-point, you can even build on top of an existing game engine. This way, you create a standalone library, or a thin "layer" that makes some tasks easier. It could be as simple as scene management, or as complicated as common code for a roguelike.</p>
+<p>Whatever your goal, pick something small and achievable as the first step.</p>
+<h2>Pick a Companion Game</h2>
+<p>Now, the most important part: <strong>do not build your game engine or framework in isolation!</strong> You will end up with bloated features that are difficult to use, and code that nobody uses.  Instead, design a small standalone game that you feel really excited to build.</p>
+<p>The key: build your game <em>in tandem</em> with your game engine. For example, if you need outlined text, add some code for that to your game engine, then add it to the titlescreen, options screen, or whatever location in your game that you need it.</p>
+<p>This keeps your code useful, streamlined, and well-tested to begin with; it greatly increases the chances that you can ship something useful at the end of your game development cycle, whether the game ships or not.</p>
+<p>Work on your game framework with that cycle: add code, test it, implement it in your game. Rinse, repeat.</p>
+<h2>Use-Case</h2>
+<p>If your game framework extends beyond a simple library, you should consider the user workflow carefully. How do users use your framework? Do they link a DLL, or copy/paste code into their project? Do you need to provide a template project with some starter code, or simply a spec for a JSON file?</p>
+<p>Looking at this early on makes it easier for users to eventually use your game framework.</p>
+<h2>Testing and Quality</h2>
+<p>Testing your game framework is really important. As it grows, you will find it increasingly likely that you accidentally break things in other places and not notice. I highly recommend writing unit tests and/or integration tests for <em>every single line of code you write.</em> This makes it very easy to make changes: you simply run the tests, and they identify anything broken you need to fix.</p>
+<h2>A War Story: Oneons and Puffin</h2>
+<p>I applied this process to a number of game frameworks over the years (mostly abandonware). One of them, <a href="https://github.com/nightblade9/puffin-v1">Puffin</a>, actually shipped to production (I finished it and launched the game and the framework). It didn't meet my long-term needs, but it worked well enough.</p>
+<p>Here's a quick summary of how that came to be:</p>
+<ul>
+<li><strong>Target:</strong> I really like Godot. One thing that frequently bugs me is the lack of free support for exporting your game for the Nintendo Switch. I'm also not a big fan of GDscript, the internal, Python-like scripting language.</li>
+<li><strong>Goal:</strong> I decided to build something similar to Godot - a visual IDE - albeit in C#. I chose MonoGame as my base, since I've used it before, and since it has excellent free support for porting to the Switch</li>
+<li><strong>Small Target:</strong> For the first version of Puffin, I decided to leverage my experience with CraftyJS and build a small, easy-to-use fluent API. I based it on Entity-Component System architecture. (This isn't a good fit for Godot-like games, which use nested nodes.)</li>
+<li><strong>Start Small:</strong> I build the absolute minimum code to get started: a base entity class, and some components for rendering sprites and text. That's it.  I decided I would limit myself to no IDE or UI controls, as those require a lot of additional effort to build.</li>
+<li><strong>Companion Game:</strong> I started immediately on <a href="https://store.steampowered.com/app/1342600/Oneons_Prisoners/">Oneons</a>, my companion game: a tiny broughlike dungeon-crawler with 12 floors of mayhem, monsters with powers, and tactical combat. I shipped the first version of Oneons, with Puffin, in a month for the <a href="https://itch.io/jam/persistent-roguelike-jam/">Persistent Game Jam</a>.</li>
+<li><strong>Unit testing:</strong> Most of the Puffin code is unit-tested, and every commit builds and runs the test in Jenkins. This helped me notice when I accidentally broke things.</li>
+</ul>
+<p>Ultimately, Puffin didn't meet my needs; in particular, the choice of an ECS architecture didn't mesh well with Godot-style nested scenes and subscenes.</p>
+<p>I may revisit Puffin in the future, and I certainly learned a lot about development through this experience. I hope you, too, will find the time and effort to build something, big or small, to help you build games you like faster and better than whatever you're using today.</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2022/using-feature-toggles-to-keep-your-demo-code-up-to-date.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2020/web-application-translation-architecture-in-net.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

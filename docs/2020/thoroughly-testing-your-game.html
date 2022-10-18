@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Thoroughly Testing Your Game · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Thoroughly Testing Your Game" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.devrant.com%2Fdevrant%2Frant%2Fr_519301_QxQcw.gif&amp;f=1&amp;nofb=1" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2020/thoroughly-testing-your-game.html" />
+    <meta property="og:description" content="Why Test? Of all the fun, interesting, exciting game development topics I could write about, I chose: testing. Why? Because testing is essential to shipping your game without bugs and without hours upon hours of manual effort. As we&#39;ll see shortly, there are well-known patterns and practices you can apply …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2020-07-07" />
+    <meta property="article:section" content="Game Development" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2020/thoroughly-testing-your-game.html">Thoroughly Testing Your Game</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2020">2020</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2020Month07">07</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2020Month07">07</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p><img alt="2 unit tests, 0 integration tests" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.devrant.com%2Fdevrant%2Frant%2Fr_519301_QxQcw.gif&amp;f=1&amp;nofb=1"></p>
+<h1>Why Test?</h1>
+<p>Of all the fun, interesting, exciting game development topics I could write about, I chose: testing.</p>
+<p>Why?</p>
+<p>Because testing is <em>essential</em> to shipping your game without bugs and without hours upon hours of manual effort. As we'll see shortly, there are well-known patterns and practices you can apply; some generic to softwre testing, and some specific to game testing. </p>
+<p>I discovered these practices after working more then a decade as a professional software developer, and applying them on and off for a decade as a hobbyist game developer. They take time, yes. They work, often and they're better (faster, more reliable, consistent) than manual testing.</p>
+<h1>Overall Strategy</h1>
+<p>Your goal with software testing is to release your game at the highest possible quality: that means NO BUGS! Everything should work the way the designers intended, <em>without</em> us spending tons of manual hours play-testing the same parts over and over and over (yawn).</p>
+<p>Your overall strategy needs to include the following categories:</p>
+<ul>
+<li><strong>Unit Testing:</strong> So you know your methods/classes/scripts/objects work at a granular level.</li>
+<li><strong>System Testing:</strong> Make sure cross-object workflows succeed, like "user last-shots an enemy and gets bonus gold." Sometimes called integration testing, functional testing, or end-to-end testing.</li>
+<li><strong>Regression Testing:</strong> Every bug you find and catch should be exploited by a unit test. If that test passes, it guarantees the bugs won't repeat.</li>
+<li><strong>Exploratory Testing:</strong> There's no substitute for playing your game and trying weird stuff. You'll find quirks and things that your automated tests won't catch.</li>
+</ul>
+<p>Without these fundamentals, be prepared for lots of bugs and poor game reviews! Above and beyond them, depending on your available time, skill, and interest, you may benefit from additional categories:</p>
+<ul>
+<li><strong>Balancing:</strong> Write tests that make sure the game is balanced, e.g. each class has roughly the same DPS, or that dungeons generate with roughly the right progressive difficulty</li>
+<li><strong>Performance or Crash Testing:</strong> Running previously-problematic code and making sure it's fast or doesn't crash. This includes running your game overnight to see if bad things happen.</li>
+</ul>
+<p>I can't reasonably explain all those topics in a suitable depth without writing an essay, but get in touch with me if you would like more information on these topics.</p>
+<h1>Testing Process</h1>
+<p>Regardless of how little or how much you utilize the above categories of testing, you <em>need</em> to properly test your game whenever you make a change. Properly means: sufficiently testing those areas that <em>may</em> be affected, to make sure they still work as expected.</p>
+<p>After all, global variables are still a thing. Singletons can easily be accessed from anywhere. Highly-coupled code is common in (and out) of games. You need to make sure you didn't break stuff by mistake.</p>
+<p>How? Simple; but it all depends on two things:</p>
+<ul>
+<li>You have a continuous integration setup which builds on every commit</li>
+<li>You have a way of producing a final kit (installer, standalone executable, etc.) that you're going to ship</li>
+</ul>
+<p>Let's start with baby steps. Whenever you make a code change:</p>
+<ul>
+<li>Write unit tests</li>
+<li>Run all unit tests continuously (before you check in)</li>
+<li>Have a continuous integration solution (e.g. Jenkins, Travis-CI) build your code and run tests every commit</li>
+</ul>
+<p>This makes sure your code works (very granularly, at a class/scene/script method) and that you didn't break anything in an unrelated area. Good unit testing usually uncovers bugs (while you're writing the test code). They run fast (sub-second), so you can test lots of things quickly.</p>
+<p>If you have integration/functional/system tests, they're usually slower (seconds each), but highly valuable, since they're like a mini version of your game in some scenario/situation. Run those as part of the build, too.</p>
+<p>After the build runs, it generates a playable binary of some sort. Against this, you want to properly test the new feature/change/fix you just added. Like, <em>properly</em>, including things leading up to it and things after it should have happened.</p>
+<p>With this done, you can be reasonably sure your game works, assuming you have good coverage of unit, regression, and system tests. You may want to run some exploratory tests: mess around and see if you can find anything or break anything.</p>
+<h1>Release-Time Testing Process</h1>
+<p>Your game is done, hurray! Congratulations! Now, the fun part: testing your game before you ship it. Since you have a robust build system in place, take the binaries from a passing build, and test it.</p>
+<p>The best way to know if your game is likely ready, is:</p>
+<ul>
+<li>Play it from beginning to end</li>
+<li>Stop and fix any bugs you find, verifying them through the build binaries</li>
+<li>Depending on the game length, either start over, or finish the run</li>
+</ul>
+<p>Repeat this until you can complete the game without finding anything to fix.</p>
+<p>Also, when you find a bug, you don't need to re-test <em>everything</em>; you can re-test <em>just</em> the affected area (e.g. inventory management) and any other areas that might be affected because of shared/common/global code (e.g. item crafting).</p>
+<h1>Balancing, Performance and Crash Testing</h1>
+<p>If you write tests for balancing (make sure monsters, or skills, or levels, etc. are balanced with respect to each other), performance (make sure a certain part of the game runs fast enough), or crash (exercise a workflow and check it doesn't crash) testing, you can run them as little or as much as you like.</p>
+<p>I recommend running them at least weekly or per-sprint, to make sure nothing broke unexpectedly. If you have a good CI system and don't mind longer test runs, you can run them as part of the CI.</p>
+<h1>Conclusion</h1>
+<p>Testing is expensive! It takes time and effort! Write tests, debug tests, update tests! Anyone who tried this process will likely tell you <em>it's worth it</em>. The pay-off of pressing a button or pushing a commit, and having <em>confidence</em> that your game works, in every way you tested, is well worth the effort.</p>
+<p>Don't be daunted. Take baby steps. Practice. Ask questions. Try to add a bit more to each new project you start, so you can eventually master all these skills. They take time.</p>
+<p>If you ever want a second opinion or sounding board, or have questions or comments, feel free to reach out to me <a href="https://twitter.com/nightblade99">on Twitter</a> or <a href="https://discord.gg/frKXYtG">Discord</a>.</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2020/web-application-translation-architecture-in-net.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2020/a-primer-on-aabb-collision-resolution.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Getting Started with Unit and Integration Testing in Godot · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Getting Started with Unit and Integration Testing in Godot" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://i.imgur.com/F3hoasj.jpg" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html" />
+    <meta property="og:description" content="(Image credit: Godot blog) Godot affords the possibility of unit and integration testing gdscript code via the GUT extension. If you&#39;re getting started with unit/integrated testing (collectively &#34;automated testing&#34;) or Godot, and interested in what automated testing can do for you, read on. What is Automated Testing and Why …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2019-05-13" />
+    <meta property="article:section" content="Game Development" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html">Getting Started with Unit and Integration Testing in Godot</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month05">05</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month05">13</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p><img alt="screenshot with code on top" src="https://i.imgur.com/F3hoasj.jpg">
+(Image credit: <a href="https://godotengine.org/article/tests-needed-godot-2-1-4-beta">Godot blog</a>)</p>
+<p>Godot affords the possibility of unit and integration testing <code>gdscript</code> code via the GUT extension. If you're getting started with unit/integrated testing (collectively "automated testing") or Godot, and interested in what automated testing can do for you, read on.</p>
+<h1>What is Automated Testing and Why do I Care?</h1>
+<p>Your game contains lots of logic. When you make changes, you need to re-test that everything that worked before, still works (nothing broke). As you find and fix bugs, and get into corner-cases of your game (eg. testing the entire play-through), manually re-testing everything becomes more and more time-consuming.</p>
+<p>Automated testing provides a solution to these problems: what if you could <em>write code</em> that would test your game code? What if that code could run through all the necessary scenarios of your game in a matter of minutes, or seconds? What if you could run the tests after every single change, and be sure that you never broke anything?</p>
+<p>Automated testing provides exactly this benefit. You write test-code that tests your "production" code. Unit tests, which test very small levels of functionality, run in in a matter of milliseconds; integration tests, which typically test workflows (fight monster, get experience, level up, spend skill points) take longer, but allow you to automate workflows.</p>
+<p>Finally, any experienced developer with automated testing will agree: the <em>mindset change</em> you get from automated testing is unparalleled. Not only can you test <em>every single line of code</em> you change, making sure it works, but you can also make bigger, riskier changes, because of your safety-net of unit tests. You can actually go faster, and make bigger changes, with your safety net of automated tests.</p>
+<h1>The Downside of Automated Testing</h1>
+<p>Like many things, automated testing is a trade-off. Unit testing is the de-facto standard now in the software industry, so we happily accept the downsides in exchange for the wealth of benefits we receive. Regardless, here they are:</p>
+<ul>
+<li><strong>Automated tests take time to write.</strong> You could be writing production code instead! For very tiny projects, proof-of-concepts, prototypes, and simple applications, you may not care about testing at all.</li>
+<li><strong>Writing testable code changes your code.</strong> Your code ends up being more decoupled, more isolated, and more testable. While these are all good software engineering practices, some communities look down on this.</li>
+<li><strong>Flaky tests.</strong> Poorly-written integration tests (and sometimes unit tests) can fail on and off, sometimes for reasons not related to your change. (As you become more experienced with testing, you learn how to write less-flaky tests.)</li>
+<li><strong>Major refactoring is expensive.</strong> If you decide to change a significant amount of code - like moving a method from one place to another, or significantly changing functionality - you now need to pay the cost of updating lots of broken tests.</li>
+</ul>
+<p>Overall, the benefits heavily outweigh the costs. There's really no reason not to write automated tests!</p>
+<h1>Unit vs. Integration Testing</h1>
+<p>We touched earlier on the difference between unit and integration tests. Typically, unit tests test a single method or class. The hallmark of unit tests, is that they don't depend on anything external - they don't touch the database, the file-system, they don't make web-service calls, etc. Because of this, unit tests tend to be extremely stable and robust, and run in sub-millisecond time. A large suite of thousands of unit tests may run in just a few seconds.</p>
+<p>However, unit tests, by nature, test only a very limited set of functionality. Integration tests, in contrast, typically test more complex scenarios, and/or workflows.</p>
+<p>Imagine we wrote an RPG-style game. The user can battle monsters; on victory, he receives experience points, and can use those to invest in learning new skills.  If we structured this as typical domain-driven classes (such as <code>Player</code>, <code>Monster</code>, etc.) we might write unit tests such as:</p>
+<ul>
+<li><code>Player.attack(target)</code> damages the target</li>
+<li><code>Player.hurt(damage)</code> decreases health</li>
+<li><code>Player.hurt(damage)</code> throws an error if damage is less than zero (programmer bug)</li>
+</ul>
+<p>These are all class/object/method-level tests. In contrast, we might write integration tests such as:</p>
+<ul>
+<li>When a player fights an enemy and defeats it, the player receives experience points</li>
+<li>When the player receives enough XP, they level up and gain skill points</li>
+<li>When monsters defeat the player, the game reaches a "game over" state</li>
+</ul>
+<p>These tests, by nature, work with a larger set of code - so you can test more things. But, they can also be more fragile - if something breaks in the workflow (damage calculation broken? Level-up calculation broken? Skill-points UI broken?), the test can fail.</p>
+<h1>Godot with  Mono vs. GDscript</h1>
+<p>Godot provides two options for unit testing, depending on whether you prefer C# or GDscript.</p>
+<p>If you prefer C#, create your project as a Godot + Mono project, and write as much logic as possible in the C# code. This way, you can use the "usual" set of C# testing tools (NUnit, Moq, etc.) and everything Just Works.</p>
+<p>If you can't, won't, or prefer GDscript, you can use the GUT extension. (GUT stands for Godot Unit Test.)</p>
+<h1>Getting Started Testing (with Gut)</h1>
+<p>The <a href="https://github.com/bitwes/Gut">GUT project page on GitHub</a> provides a <a href="https://github.com/bitwes/Gut/wiki/Install">detailed explanation of getting started</a>, which I won't repeat here. Install GUT in your project, create a new scene with the <code>Gut</code> object, and you're ready to go.</p>
+<p>Instead, I'll focus on getting started testing: what do you test? Assuming you have an existing project with an extensive code-base and zero unit tests, what do you do?</p>
+<p>Fundamentally, you need to start doing two things:</p>
+<p>1) Refactor your code to make it more testable
+2) Write tests for any new code</p>
+<p>We didn't really touch on testable code in any depth. The short version is: write simple classes with simple methods, and avoid dependencies on any external "things." For example, if your <code>Player.damage</code> class depends on a <code>Globals.battle_difficulty</code> multiplier, accept it as a passed-in value instead of referencing the <code>Globals</code> script. Change this:</p>
+<div class="highlight"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="n">player</span><span class="o">.</span><span class="n">gd</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="n">damage</span><span class="p">(</span><span class="n">target</span><span class="p">):</span><span class="w"></span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">total_defense</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target</span><span class="o">.</span><span class="n">defense</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Globals</span><span class="o">.</span><span class="n">battle_difficulty</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">target</span><span class="o">.</span><span class="n">current_health</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">strength</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">total_defense</span><span class="w"></span>
+
+<span class="o">//</span><span class="w"> </span><span class="n">Elsewhere</span><span class="w"></span>
+<span class="n">player</span><span class="o">.</span><span class="n">damage</span><span class="p">(</span><span class="n">selected_monster</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<p>To this:</p>
+<div class="highlight"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="n">player</span><span class="o">.</span><span class="n">gd</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="n">damage</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">battle_difficulty</span><span class="p">):</span><span class="w"></span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">total_defense</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target</span><span class="o">.</span><span class="n">defense</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">battle_difficulty</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">target</span><span class="o">.</span><span class="n">current_health</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">strength</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">total_defense</span><span class="w"></span>
+
+<span class="o">//</span><span class="w"> </span><span class="n">Elsewhere</span><span class="w"></span>
+<span class="n">player</span><span class="o">.</span><span class="n">damage</span><span class="p">(</span><span class="n">selected_monster</span><span class="p">,</span><span class="w"> </span><span class="n">Globals</span><span class="o">.</span><span class="n">battle_difficulty</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<p>While the code is functionally equivalent, the latter is far more testable: you can pass in whatever value of <code>battle_difficutly</code> you want in your tests, even invalid values like -3! In fact, this is the kind of functionality you want to unit-test: in addition to making sure it works with a correct difficulty, you can test that it fails appropriately (eg. throws an error or returns 0) with an invalid value - something you can't easily test through the actual game.</p>
+<h1>In Conclusion</h1>
+<p>We covered a lot of ground in this article.  In summary:</p>
+<ul>
+<li>We talked about automated testing, and why we care about it at all</li>
+<li>We looked at some of the benefits and advantages of unit-testing</li>
+<li>We touched on some of the downsides, most of which are not really disadvantageous</li>
+<li>We looked at unit vs. integration tests, and one way to define integration tests as workflows</li>
+<li>We covered testing with C# (in brief) vs. testing GDscript with Godot</li>
+<li>We looked at writing a few simple unit tests on a player class, and making code more testable</li>
+</ul>
+<p>I hope this post benefited you, and convinced you to at least try unit testing! Please let me know your feedback <a href="https://twitter.com/nightblade99">on Twitter</a> - whether you decide to try testing, what you didn't understand, and what kind of topics you would like me to cover in future articles on Godot and testing.</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2019/capture-in-game-screenshots-in-godot.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2019/godot-game-crashes-on-startup-logo-showshides.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

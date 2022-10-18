@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Godot Game Crashes On Startup, Logo Shows/Hides · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Godot Game Crashes On Startup, Logo Shows/Hides" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2019/godot-game-crashes-on-startup-logo-showshides.html" />
+    <meta property="og:description" content="I recently rebuilt a small app/game using Godot. For reference, the game contained one core loop, and took about four hours to build (from scratch). I reused all of the assets from the previous version of the game (audio and graphics), which took the bulk of development time on …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2019-04-29" />
+    <meta property="article:section" content="Technical" />
+    <meta property="article:tag" content="Godot" />
+    <meta property="article:tag" content="Android" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2019/godot-game-crashes-on-startup-logo-showshides.html">Godot Game Crashes On Startup, Logo Shows/Hides</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a>
+      <b> · </b>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/godot.html">Godot</a>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/android.html">Android</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month04">04</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month04">29</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p>I recently rebuilt a small app/game using Godot. For reference, the game contained one core loop, and took about four hours to build (from scratch). I reused all of the assets from the previous version of the game (audio and graphics), which took the bulk of development time on the original.</p>
+<p>The game built and ran flawlessly in Godot on Windows. As soon as I ran it on Android, the game briefly showed the Godot loading logo for ~100ms, then it disappeared, then reappeared/disappeared around four times (you can see the original issue I opened about on GitHub, <a href="https://github.com/godotengine/godot/issues/27583">here</a>).</p>
+<p>The root cause of all this was multiple resources preloading the same script. I had a scene that preloaded <code>HelperScript.gd</code> and then <code>Second.tscn</code>; but <code>Second.tscn</code> also preloaded <code>HelperScript.gd</code>, causing the crash.</p>
+<p>I found three different ways to address this problem:</p>
+<ul>
+<li><strong>Use singletons.</strong> Instead of preloading <code>HelperScript.gd</code> everywhere, I simply added it to the list of auto-loaded singletons in Godot. Problem solved. (This solution also makes sense, because I needed the same common method from <code>HelperScript.gd</code>.)</li>
+<li><strong>Use <code>load</code> instead of <code>preload</code>.</strong> This makes me think <code>preload</code> is bugged; calling <code>load</code> succeeds without any issues. Obviously, this has performance implications - you may <em>want</em> to preload your entire game at startup time.</li>
+<li><strong>Refactor.</strong> In my case, I needed a common function from a shared script. What if I used the same file, but two different functions? Perhaps I could split <code>HelperScript.gd</code> into two different scripts, and just load what I need instead.</li>
+</ul>
+<p>If you find your Godot game crashes on startup without explanation, maybe this is something you can investigate. (Failing that, go for a <code>git bisect</code> and try to isolate the commit that broke everything.)</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2019/text-rendering-performance-check-for-a-reactjs-ascii-roguelike.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Capture In-Game Screenshots in Godot · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Capture In-Game Screenshots in Godot" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://i.imgur.com/OlsyPli.gif" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2019/capture-in-game-screenshots-in-godot.html" />
+    <meta property="og:description" content="Godot allows you to capture in-game screen-shots, without the use of any plugins/addons. However, I couldn&#39;t find a complete, step-by-step guide to do this, without relying on any specific nodes being instantiated in your scene. You can follow these steps. I tested these on Godot 3.0.6. Some …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2019-06-11" />
+    <meta property="article:section" content="Technical" />
+    <meta property="article:tag" content="Godot" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2019/capture-in-game-screenshots-in-godot.html">Capture In-Game Screenshots in Godot</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a>
+      <b> · </b>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/godot.html">Godot</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month06">06</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month06">11</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p><img alt="Animation of a game saving, with a screenshot appearing on the save screen" src="https://i.imgur.com/OlsyPli.gif"></p>
+<p>Godot allows you to capture in-game screen-shots, without the use of any plugins/addons. However, I couldn't find a complete, step-by-step guide to do this, without relying on any specific nodes being instantiated in your scene.</p>
+<p>You can follow these steps. I tested these on Godot 3.0.6. Some of the code originated in a thread that mentioned that "you need this prior to Godot 3.1," but through testing, I eventually removed all unnecessary code. I can confirm that this sample works, because I implemented it in <a href="https://twitter.com/search?q=%23EmanQuest">Eman Quest</a>.</p>
+<h1>Saving Screenshots</h1>
+<p>Godot provides a rather straight-forward API for saving a screenshot:</p>
+<div class="highlight"><pre><span></span><code><span class="k">var</span><span class="w"> </span><span class="n">screenshot_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;user://screenshot-test.png&quot;</span><span class="w"></span>
+
+<span class="c1"># Retrieve the captured image</span><span class="w"></span>
+<span class="k">var</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">get_root</span><span class="p">()</span><span class="o">.</span><span class="n">get_texture</span><span class="p">()</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="w"></span>
+
+<span class="c1"># Flip it on the y-axis (because it&#39;s flipped)</span><span class="w"></span>
+<span class="n">image</span><span class="o">.</span><span class="n">flip_y</span><span class="p">()</span><span class="w"></span>
+
+<span class="n">image</span><span class="o">.</span><span class="n">save_png</span><span class="p">(</span><span class="n">screenshot_path</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<p>This saves a screenshot into a file called <code>screenshot-test.png</code>, under the user space; on Windows, that's something like <code>C:\Users\CURRENTLY_LOGGED_IN_USER\AppData\Roaming\Godot\app_userdata\Eman Quest\screenshot-save0.png</code>, where <code>CURRENTLY_LOGGED_IN_USER</code> is your user name (eg. <code>nightblade</code>).</p>
+<h1>Loading Screenshots</h1>
+<p>Loading screenshots proves more complicated:</p>
+<ul>
+<li>To load the data, you can use <code>image.load_png_from_buffer</code>, but it takes a <code>PoolByteArray</code> - not something you can load with a call to <code>preload("res://...")</code>. This requires using the <code>File</code> API.</li>
+<li>To set the texture onto a sprite, you cannot simply assign it to an <code>Image</code> instance; instead, you need to create and initialize an <code>ImageTexture</code> instance.</li>
+</ul>
+<p>After we sort through these issues, we end up with code like this:</p>
+<div class="highlight"><pre><span></span><code><span class="k">var</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="o">.</span><span class="n">new</span><span class="p">()</span><span class="w"></span>
+<span class="n">file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;user://screenshot-test.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">File</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span><span class="w"></span>
+<span class="k">var</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">.</span><span class="n">get_buffer</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">get_len</span><span class="p">())</span><span class="w"></span>
+<span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span><span class="w"></span>
+
+<span class="k">var</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">()</span><span class="w"></span>
+<span class="n">image</span><span class="o">.</span><span class="n">load_png_from_buffer</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">var</span><span class="w"> </span><span class="n">image_texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ImageTexture</span><span class="o">.</span><span class="n">new</span><span class="p">()</span><span class="w"></span>
+<span class="n">image_texture</span><span class="o">.</span><span class="n">create_from_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">sprite</span><span class="o">.</span><span class="n">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image_texture</span><span class="w"></span>
+</code></pre></div>
+
+<p>This loads the PNG file <code>screenshot-test.png</code> from the user-space into an <code>Image</code>, wraps it into an <code>ImageTexture</code>, and assigns it to some <code>Sprite</code> instance</p>
+<h1>Crop and Scale</h1>
+<p>Since we loaded our PNG into a <code>Sprite</code>, we can execute other operations on it:</p>
+<ul>
+<li>You can set the <code>region_rect</code> properties (through code or through the editor) to crop the image</li>
+<li>You can set the <code>scale</code> to create a thumbnail of the image</li>
+<li>You can apply effects, colourization, etc.</li>
+</ul>
+<p>This affords a lot of interesting use-cases, such as creating a thumbnail of the in-game screen per save-game (my personal use case).</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2019/eman-quest-retrospective.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

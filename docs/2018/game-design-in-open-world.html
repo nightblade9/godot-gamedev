@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Game Design in Open-World · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Game Design in Open-World" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2018/game-design-in-open-world.html" />
+    <meta property="og:description" content="According to many, open-world is fun. Perhaps it&#39;s the sense of freedom, progression, or influence upon the world which tickles a player&#39;s funny bone. Whichever it is, if there&#39;s anything we game designers know, it&#39;s that it&#39;s hard to pull off. Open-World?! What&#39;s That Mumbo-Jumbo&#39;s All About? Firstly, what is …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2018-05-11" />
+    <meta property="article:section" content="Game Development" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2018/game-design-in-open-world.html">Game Design in Open-World</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month05">05</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month05">11</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/chemicalink.html">chemicalink</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p>According to many, open-world is fun. Perhaps it's the sense of freedom, progression, or influence upon the world
+which tickles a player's funny bone. Whichever it is, if there's anything we game designers know, it's that it's hard to
+pull off.</p>
+<h3>Open-World?! What's That Mumbo-Jumbo's All About?</h3>
+<p>Firstly, what is an open-world game? <a href="https://en.wikipedia.org/wiki/Open_world">Trusty Wikipedia reports</a>,</p>
+<div class="highlight"><pre><span></span><code>A video game in which a player can roam a virtual world and approach objectives freely, as opposed to a game with more linear gameplay.
+</code></pre></div>
+
+<p>Yet with such a notion of a player freely wandering into wherever they please comes bundled with a set of issues which,
+if not dealt with properly, will make or break your game. Most prominently...</p>
+<h3>Player Power Level vs. World Power Level</h3>
+<p>Imagine you're making a game with a linear main quest where monsters gradually get stronger as the player progresses and
+gains more power. You wake up one day and decide open-world is the one feature which <em>has</em> to be included in your game.
+So you go ahead and remove all travel restrictions, and add a bit of side content.</p>
+<p>The ingenuous player decides to delay your main quest and spend some time on side quests. "Those monsters sure keep
+getting stronger," thought the player. "I need to do some side quests so I can stay one step ahead of them."</p>
+<p>Lo and behold, your carefully crafted power balance is completely destroyed, leaving you with an overpowered player
+to wipe the floor with any poor monster who dares cross his path.</p>
+<p>I'm sure you can imagine an alternative where the player is wrecked in side quests meant for a more powerful player.</p>
+<h3>The Solution</h3>
+<p>So how do you solve this? Let me just quote <a href="https://gamedev.stackexchange.com/a/1660">a little thing</a> I've read in the vast cosmos of the interwebz:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Game</span><span class="w"> </span><span class="n">design</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">pretty</span><span class="w"> </span><span class="n">much</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">giant</span><span class="w"> </span><span class="o">[</span><span class="n">CENSORED</span><span class="o">]</span><span class="w"> </span><span class="n">ball</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">borrowing</span><span class="w"></span>
+</code></pre></div>
+
+<p>In other words, in order to do things properly, we need to study the work of others, and see how <em>they</em>'ve done it.</p>
+<p>Let's take a <a href="http://en.uesp.net/wiki/Skyrim:Leveling">look</a> at the amazing Skyrim. How does it handle its level scaling?</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Different</span><span class="w"> </span><span class="nv">locations</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">Skyrim</span><span class="w"> </span><span class="nv">have</span><span class="w"> </span><span class="nv">different</span><span class="w"> </span><span class="nv">inherent</span><span class="w"> </span><span class="nv">difficulties</span>.<span class="w"> </span><span class="nv">In</span><span class="w"> </span><span class="nv">other</span><span class="w"> </span><span class="nv">words</span>,<span class="w"> </span><span class="nv">some</span><span class="w"> </span><span class="nv">dungeons</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">designed</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">too</span><span class="w"> </span><span class="nv">difficult</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">low</span><span class="o">-</span><span class="nv">level</span><span class="w"> </span><span class="nv">characters</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">enter</span>.<span class="w"></span>
+</code></pre></div>
+
+<p>That is to say, every location has a minimum and a maximum level. Say we have a dungeon from level 5 to 30.</p>
+<p>If the player enters <em>before</em> the minimum level at, say, level 2, they enter a dungeon with stronger level 5 enemies and
+better loot. If the player enters <em>within</em> the level range, for example, level 15, the dungeon would contain level 15
+enemies. And if the player enters <em>after</em> the maximum level, that is, 30+ they get to wipe the floor with level 30 enemies.</p>
+<p>Such a system allows for intricate risk/reward balancing. As in, "Just defeated a horde of trolls 10 levels above yourself? Here's
+some awesome loot to compensate." and "Done wiping the floor? Here's your two septims."</p>
+<h3>In Conclusion</h3>
+<p>Well there you have it. You've learned to avoid a game-breaking problem with open-world games. And in the solution,
+apply a new fun mechanic giving the player <em>choice</em>; and lots of rewards for daring ones.</p>
+<p>What do you think of the proposed solution? Have you encountered other problems with open-world games? Leave us a comment
+with your thoughts.</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2018/the-brilliance-of-bastions-flexible-builds.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2018/how-to-get-your-game-to-done.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

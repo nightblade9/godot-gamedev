@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Publishing Godot Games to Steam for MacOS without Hardware · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Publishing Godot Games to Steam for MacOS without Hardware" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://i.imgur.com/VXjBne7.png" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2022/publishing-godot-games-to-steam-for-macos-without-hardware.html" />
+    <meta property="og:description" content="Are you working on a Godot desktop game? Would you like to publish it to MacOS, without the pain of learning about MacOS-specific requirements like signing, notorization, and paying $99/year? The good news is, if you plan to publish your game on Steam, you can easily do this, without …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2022-07-22" />
+    <meta property="article:section" content="Technical" />
+    <meta property="article:tag" content="Godot" />
+    <meta property="article:tag" content="MacOS" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2022/publishing-godot-games-to-steam-for-macos-without-hardware.html">Publishing Godot Games to Steam for MacOS without Hardware</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a>
+      <b> · </b>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/godot.html">Godot</a>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/macos.html">MacOS</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2022">2022</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2022Month07">07</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2022Month07">22</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p><img alt="Godot and Mac" src="https://i.imgur.com/VXjBne7.png"></p>
+<p>Are you working on a Godot desktop game? Would you like to publish it to MacOS, without the pain of learning about MacOS-specific requirements like signing, notorization, and paying $99/year?</p>
+<p>The good news is, if you plan to publish your game on Steam, you can easily do this, without Mac hardware. My inspiration for this is: be the change you want to see in the world. Publish your game for Mac (and Linux), so the market grows, and more great games support these OSes.</p>
+<p>If you're interested in how to do this, skip the section below; if you're interested in how this all works (sort of), the next section gives a very brief overview of the problem.</p>
+<h2>Preamble: Signing, Notarization, and DMG Files</h2>
+<p>I don't pretend to understand how all this works. My understanding, as someone who mainly uses Unix and Windows, is the following:</p>
+<ul>
+<li>Like Windows, Mac OS requires developers to "sign" their apps with a cryptographic key of some sort</li>
+<li>Unsigned apps previously run on Mac OS with a warning; as of writing (2022 June), they no longer run at all.</li>
+<li>Notarization is a more scrutenized form of signing, and requires sending your app to Apple to approve</li>
+<li>DMG files are native to Mac, and internally contain an .app file</li>
+</ul>
+<p>The key thing here: the DMG contains an .app "file" (looks like an executable on MacOS), which is actually a zip file. That zip contains your actual binaries.</p>
+<h2>MacOS and Steam</h2>
+<p>Follow these steps:</p>
+<ul>
+<li>Create a new export profile for Mac. Configure as you like (e.g. exclusion files)</li>
+<li>On a non-Mac system, export your project for Mac. If you're using the CLI, make sure you speify the output file name as a zip file (e.g. <code>Game-MacOS.zip</code>)</li>
+<li>Verify the zip contents: it should have a <code>Game.app</code> directory (with <code>Game</code> replaced with your game name) at the root, with a <code>Contents</code> subdirectory</li>
+<li>Upload that zip to Steam</li>
+<li>Set up your launch options. According to the <a href="https://partner.steamgames.com/doc/sdk/uploading#Initial_Setup_New_App">current Steamworks docs</a>, for MacOS, your <code>Executable</code> should be set to <code>Game.app/Contents/MacOS/Game</code> (replace <code>Game</code> with your actual game name / folder name). </li>
+</ul>
+<p>And that's it! If you launch the game on Mac, it should just work!</p>
+<p>Finally: I recommend you always make sure someone with Mac hardware tests your game to ensure it launches correctly. If you don't have a friend with a Mac, you can always ask me on <a href="https://twitter.com/nightblade99">Twitter</a> or by <a href="mailto:nightbladecodes@gmail.com">email</a> to try it out.</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous disabled">
+          <a >
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2022/using-feature-toggles-to-keep-your-demo-code-up-to-date.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

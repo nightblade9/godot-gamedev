@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>The Brilliance of Bastion's Flexible Builds · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="The Brilliance of Bastion&#39;s Flexible Builds" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://i.imgur.com/GYqOEZF.jpg" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2018/the-brilliance-of-bastions-flexible-builds.html" />
+    <meta property="og:description" content="In RPGs (especially those of the 90s and early 2000s), game designers typically increase difficulty by creating increasingly powerful enemies (and more dangerous groups). To balance this, player characters engage in combat, gain experience points, and level up. Obviously, you want the game should increase in challenge/difficulty over time …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2018-05-15" />
+    <meta property="article:section" content="Game Development" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2018/the-brilliance-of-bastions-flexible-builds.html">The Brilliance of Bastion's Flexible Builds</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month05">05</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month05">15</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p><img alt="Bastion character upgrade choice" src="https://i.imgur.com/GYqOEZF.jpg"></p>
+<p>In RPGs (especially those of the 90s and early 2000s), game designers typically increase difficulty by creating increasingly powerful enemies (and more dangerous groups). To balance this, player characters engage in combat, gain experience points, and level up. Obviously, you want the game should increase in challenge/difficulty over time, or it starts to bore the player.</p>
+<p>With this approach, players have an advantage: if stuck, players can grind (kill monsters over and over again) and be able to progress further (in contrast to remaining stuck in the same impassable area). However, it also includes a couple of drawbacks for the player:</p>
+<ul>
+<li><strong>Which Choice to Pick</strong>: When faced with multiple choices (eg. two options to upgrade your character), the player often lacks enough information to decide. Even if they know which option they want to pick, the player almost never has the ability to actually <em>try</em> both options and see which one works best.</li>
+<li><strong>Fixed Builds:</strong> Once the player chooses, there's no going back. This is partly the cause of <em>decision paralysis</em> where players take forever to choose. Worse, if your game is not carefully balanced to cover all possibilities, the player may end up making a series of decisions that leave them with an impossible-to-win build, although grinding can help here.</li>
+</ul>
+<h2>The Brilliance of Bastion</h2>
+<p>Bastion solves both these problems by allowing you to "re-spec" or change your upgrade decisions at <em>virtually any point in the game.</em></p>
+<p>In Bastion, when the player levels up, they unlock a slot for "Spirits," which provide stats boosts; the player also receives a few unique choices per slot. The player can always return to the Distilliary building and change which spirits they've selected.</p>
+<p>With weapons, Bastion follows a two-step process: first, you find an upgrade item, and pay to unlock it. Once you do that, the game presents you with two options per upgrade; you can pick between them (and change your choices) at any time.</p>
+<p><img alt="Bastion weapon upgrades" src="https://i.imgur.com/MJ183AD.png"></p>
+<p>At a micro-level, the user can pick individual upgrades. However, with both spirits and with weapon upgrades, the player can <em>create builds</em> at a macro level. Many of the options harmonize well with other options; and between the choice of player upgrades and weapon upgrades, the player can craft a large number of builds that suit their particular preferences of playing style and their choice of weapons.</p>
+<p>Best of all, the player can <em>test and tweak their builds,</em> and <em>change their minds at any time.</em> This, in addition to the unparalleled flexibilty, gives the player a lot of freedom.</p>
+<p>But, it comes at a cost: some combinations are obviously more powerful than others, and some are quite unbalanced. This makes the game design a bit more challenging, because the designer needs to handle a wider range of possibilities.</p>
+<h2>Takeaways</h2>
+<p>As game designers, I think we can learn a lot from Bastion's design:</p>
+<ul>
+<li>Providing a flexible upgrade system gives players the ability to tweak and test their builds</li>
+<li>Flexible builds makes it less likely for the player to be really stuck (there are lots of alternatives to try)</li>
+<li>But, flexible builds requires care to make sure some builds are not over-/under-powered, and that levels are balanced</li>
+</ul>
+<p>Finally, many games already implement flexible builds today, including League of Legends and DOTA 2, and even classics like Final Fantasy 5. We can see, from this, that the concept of flexible builds can apply to different game genres.</p>
+<p>If you think flexible builds can add to your game, try it, and see if the benefit of multiple progression paths outweighs the cost of slightly more complex game balancing.</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2018/how-tiny-rails-quietly-normalizes-islam-and-muslims.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2018/game-design-in-open-world.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

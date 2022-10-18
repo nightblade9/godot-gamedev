@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Eman Quest Retrospective · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Eman Quest Retrospective" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://i.imgur.com/rpSFnxr.png" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2019/eman-quest-retrospective.html" />
+    <meta property="og:description" content="Welcome to the rather large retrospective on Eman Quest. Eman Quest, if you haven&#39;t heard about it, is a &#34;procedurally-generated mini-RPG with memory mechanics.&#34; You can try the full game, for free, on Itch. This retrospective covers two parts: first, the overall idea (what did I plan to achieve? What …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2019-08-22" />
+    <meta property="article:section" content="Retrospective" />
+    <meta property="article:tag" content="Godot" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2019/eman-quest-retrospective.html">Eman Quest Retrospective</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a>
+      <b> · </b>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/godot.html">Godot</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month08">08</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month08">22</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p><img src="https://i.imgur.com/rpSFnxr.png" alt="screenshot of the protagonist in a cave map" width="750" height="450" /></p>
+<p>Welcome to the rather large retrospective on <a href="https://deengames.itch.io/eman-quest">Eman Quest</a>. Eman Quest, if you haven't heard about it, is a "procedurally-generated mini-RPG with memory mechanics." You can try the full game, for free, on Itch.</p>
+<p>This retrospective covers two parts: first, the overall idea (what did I plan to achieve? What did I actually achieve? Reflections), and the key lessons learned (mostly specific to Godot).</p>
+<h1>The Overall Idea: A Procedurally-Generated RPG</h1>
+<p>I really like procedural content generation (in general), although it's deceptively difficult to implement correctly (corner cases really get you). I always wanted to make a "procedurally-generated Chrono Trigger-like RPG," although that's a huge undertaking; Eman Quest was the first step: creating a small, "lightweight" or "mini" RPG.</p>
+<p>What, exactly, did I include in Eman Quest?</p>
+<ul>
+<li>A fixed story about life, faith, and family</li>
+<li>Seven different areas; these are three geographies (forest, cave, and dungeon) each with multiple biomes (frost forest, death forest, desert dungeon, etc.)</li>
+<li>A unique world: each time you play a new game, it picks three out of seven biomes, and generates the required maps for each.</li>
+<li>Unique enemies, two per area, statically-generated and balanced with careful trade-offs (eg. glass cannon, tank), and a unique boss per biome.</li>
+<li>Procedurally-generated equipment (weapons, armour), including their stats</li>
+<li>A battle system that relies on not puzzle/thinking or skills/reflexes, but memory: remember the selected tiles, pick them to get action points, chain them to get tech points, and then use them for your turn.</li>
+<li>Two fixed skills in battle</li>
+<li>A progression system with experience, levels, and stats points you can distribute to your liking (respeccing is free).</li>
+</ul>
+<p><img src="https://i.imgur.com/2bx1y6M.gif" alt="one round of battle" width="750" height="450" /></p>
+<p>I didn't include many things in Eman Quest; specifically, I analyzed Bastion, how they cut corners to cut down on the amount of content they needed to complete the game, and applied it to my game. Specificially:</p>
+<ul>
+<li>I scrapped procedural story-, world-, event-, and character-creation, and wrote a fixed story instead</li>
+<li>I scrapped the world map, because it adds little or no value</li>
+<li>I didn't incude any NPCs or shops, because those require a lot of art/coding. (You always find better equipment in chests than what you're using.)</li>
+<li>I cut a few things in content: avatars, some biome variants (crystal caves), variant bosses, and unique final-boss skills.</li>
+</ul>
+<h1>What Went Well</h1>
+<p>Overall, I am very happy with the result, and thankful that I could finish this project, although it doesn't come quite close to my initial vision (due to scope cuts and resource/time constraints).</p>
+<p>Things I really like about Eman Quest:</p>
+<ul>
+<li>It "feels" like a procedurally-generated RPG.</li>
+<li>It's balanced (monsters seem quite distinct/different to fight) even though it's on the easy side</li>
+<li>Quite a few people completed the game</li>
+<li>The memory mechanics received some compliments (more on the design below)</li>
+<li>I shipped. Especially considering I tend to abandon long-running projects, this is especially important to me</li>
+<li>I polished the game considerably, including audio (background and sound-effects)</li>
+<li>I received some fan-art, and several questions about my protagonist; which prompted me to create an elaborate background, and a character representing many minorities: a strong woman, a Muslim, and an African</li>
+<li>I represented Muslims and Islam positively, and communicated one of our values (good treatment of parents)</li>
+<li>I learned a lot about game accessibility, and added a few accessibility options into my game</li>
+</ul>
+<p>Below, you can see the fan-art of the protagonist, Aisha.</p>
+<p>As my first full Godot project, I'm not really proud of the code quality; as I joked on <a href="https://discord.gg/frKXYtG">my Discord server</a>, code quality decreases as you get closer to production!</p>
+<p><img src="https://i.imgur.com/LeKMWbk.jpg" width="600" height="570" /></p>
+<h2>Memory Mechanics</h2>
+<p><img alt="memory mechanics screenshot" src="https://i.imgur.com/xOOetlV.png"></p>
+<p>Aside from the technical challenge of creating a procedural RPG, I challenged myself to create a fun battle mechanic based on memory instead of reflexes or puzzles.  I also received lots of good feedback about this from users, who praised the memory mechanic as interesting.</p>
+<p>The core mechanic works simply: a 5x5 grid appears, some squares highlight for a fractional second, and then disappear. You need to click on those highlighted tiles to accumulate "action points," which you can use for different actions (attack costs 2, critical costs 3, and defend/heal costs 1).</p>
+<p>In initial prototypes, I experimented with requiring players to pick both energy (action poinst) and actions they wanted to play. This proved to be quite "stressful," because you have a fractional second to look for both required energy tiles and action tiles; midway through development, I streamlined it into what it is now.  I also tried several variations (incluiding a "simon says" type mini-game and a stream of "which of these items did you never see before"), both of which didn't seem fun enough to include in the final.</p>
+<p>I also found that battles become somewhat rote and mechanical/deterministic after a while: you pick the five specified tiles, then pick crit, attack, and repeat, healing as necessary.  To change it up, and to reward skillful play, I added techniques/skills and technical points.</p>
+<p>Players who pick three or more tiles correctly in a row (with no mistakes) acquire tech points. If you select all five tiles correctly, you get a total of three tech points. You can save these up and use either five or seven for stun/vampire skills respectively. This adds an element of strategy and non-determinism.  Tech poinst also persist across battles, adding another dimension of planning.</p>
+<h1>What Didn't Go Well + Key Insights</h1>
+<p>I initially planned one month to complete the project; it ended up taking around nine months. Why? Many reasons, including:</p>
+<ul>
+<li>I realized early on that different forests just didn't cut it, and needed both variation (styles of forests) and map types (cave, dungeon, etc.)</li>
+<li>Creating art was not my strong-suite, and I needed three distinct tilesets, each with two unique variations</li>
+<li>Finding, drawing and animating 14 monsters, and their walk cycles, took a lot of effort; even though I found many of the base sprites and received lots of help on the art side.</li>
+<li>I added the story about five months in, and required implementing an entire message dialog system, key-item system, final-game events, and lots of unexpected things.</li>
+<li>Technical struggles with, and crashes in, Godot (more on that below).</li>
+</ul>
+<p>I ran into several difficulties along the way.  These include:</p>
+<ul>
+<li>Learning Godot's API, which seemed quite foreign to me (anything is a scene and can contain sub-scenes). Also, Godot is quite a wide framework, and it takes time to discover/learn/use things (like UI components).</li>
+<li>Learning about Godot's automatic garbage-collection (<code>free</code> and <code>queue_free</code>) and how they destroy all objects when changing scenes. This caused me to rewrite my early version to completely separate data about maps (tiles, treasure, etc.) from the visual presentation of those, which got GCed.</li>
+<li>I wrote garbage, prototype-quality code throughout. This lead to numerous bugs (some difficult to diagnose and fix), and a cycle of "fix something but break something else" late in development. You can see tweets with some bugs, including a few hilarious ones, <a href="https://twitter.com/search?q=%40nightblade99 %23EmanQuest %23Bugs">here</a>.</li>
+<li>I didn't write any unit or integration tests. This meant I could break things without noticing for days/weeks. I remedied this quite late in development by using GUT (Godot Unit Testing).</li>
+<li>Lack of CI. Unlike other, C#-based projects, I couldn't get Travis to run my tests; so if I forgot to run tests, broken things stay unnoticed.</li>
+<li>The final game crashed a lot, which caused a lot of stress and resulted in a lot of lessons; so I wrote a section just on that.</li>
+<li>Close to the end of development, I lost my GPU on my main development machine, and my main Windows installed contained drivers that didn't run with Godot 3.0.6. I ended up switching to Linux (which included up-to-date drivers), but lost of a lot of time; I also upgraded Godot to 3.1.1, which initially showed a problem with cave maps running at 2-3FPS, but works fine on Linux.</li>
+<li>Serialization for saving games. As <a href="https://docs.godotengine.org/en/3.1/tutorials/io/saving_games.html">the Godot docs on saving games</a> suggests, you need to <em>manually</em> serialize all your (nested, hierarchial) data structures into JSON. This requires a lot of boilerplate, and it's very tedious (you may miss a field and not realize unless you test thoroughly).</li>
+</ul>
+<h2>The Game Crashed on Release</h2>
+<p>When I released the game, it crashed. A lot. This undoubtedly resulted in a terrible first-impression, although I received several supportive comments such as "it crashed once and then I reloaded and it was fine" or "it keeps crashing after battles but I completed the game."</p>
+<p>Why did it crash, why didn't I notice, and how did I fix the crashes?  Well, I'm glad you asked.</p>
+<p>Godot runs the game in the editor, somewhat differently from when you export the final platform-specific release. This includes differences such as caring about case-sensitivity (which the Editor doesn't, on Windows), and - critically - crashing when you do Bad Things (like waiting for an event and disposing the scene before it comes back).</p>
+<p>I always tested Eman Quest from within the editor, so I never noticed (or cared to notice?) the errors. The game also crashed on Linux and (troublingly) MacOS (which I don't have hardware to test with), but not on Windows, so I failed to catch it in my pre-release testing.</p>
+<p>In the end, I upgraded Godot from 3.0.6 to 3.1.1 (someone commented that it didn't work with their graphics card, and 3.1.1 works with OpenGLES 3.1 and earlier), and the crashes disappeared.  I also:</p>
+<ul>
+<li>Tested on Linux (after switching to Linux) and found I could reproduce, and fix, one crash</li>
+<li>Fixed sporadically-appearing errors that Godot printed out, which fixed at least one crash</li>
+<li>Received great offers of help from people on Twitter, specifically running MacOS, who found workflows in-game that reproduced the crash, and verified after I fixed them.</li>
+</ul>
+<h1>Action Items</h1>
+<p>I learned several key lessons out of this. Learning about Godot itself proved invaluable; beyond that:</p>
+<ul>
+<li><strong>Write clean code.</strong> (Clean meaning, as good as you can make it.) This results in less bugs and less painful troubleshooting later on when things turn bad.</li>
+<li><strong>Export and test your project often.</strong> This catches bugs, crashes, and all kinds of badness that you don't want players to find first.</li>
+<li><strong>Fix all runtime errors, and any errors/warnings Godot generates.</strong> These often foreshadow crashes when the game runs (sometimes, only on select platforms - Windows seems fairly resilient)</li>
+<li><strong>Unit test everything.</strong> Unit testing is cheap, runs quickly, and pays for itself in spades; you can quickly catch issues without manually retesting everything.</li>
+<li><strong>Set up a continuous integration pipeline to run your tests.</strong> With GitHub and Travis, you can check in code, and get an email whenever you broke some tests (but didn't notice by running them manually). That can be invaluable to avoid breaking things that work.</li>
+<li><strong>The Godot community is awesome.</strong> Ask on Discord, open a GitHub issue, post a tweet - there are experienced developers who will get back to you, promptly, with solid solutions. Just be careful what you ask for! (I upgraded to Godot 3.1.1  and needed to redo all my UI to fix a tiny bug with one slider.)</li>
+<li><strong>Always update to the latest version of Godot.</strong> It really works better, and often clears up hard-to-fix bugs.</li>
+<li><strong>Make friends on Twitter.</strong> You never know who will like, follow, comment, download your game, and - critically - help often comes from those who we least expect it from.</li>
+</ul>
+<p>Finally, I want to personally thank everyone who helped me with the project - you know who you are. Without your help, coaching, support, and mentorship, I would never actually finished the game.</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2019/integrating-religion-into-games.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2019/capture-in-game-screenshots-in-godot.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

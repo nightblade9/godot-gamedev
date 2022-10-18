@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Godot Game Development">
+    <meta name="author" content="nightblade">
+
+        <title>Web Application Translation Architecture in .NET · Godot Game Development</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/main.css">
+
+    <link rel="stylesheet" href="https://nightblade9.github.io/godot-gamedev/theme/css/solarized-light.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <meta property="og:title" content="Web Application Translation Architecture in .NET" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://i.imgur.com/bqyLzs1.png?1" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2020/web-application-translation-architecture-in-net.html" />
+    <meta property="og:description" content="So you want to localize and internationalize your web application? There are a lot of considerations, but here, we briefly discuss just the translation part. This post covers a couple of the architectural/design options and discusses their respective trade-offs. While this is a bit specific to .NET, other languages …" />
+    <meta property="og:site_name" content="Godot Game Development" />
+    <meta property="article:published_time" content="2020-08-11" />
+    <meta property="article:section" content="Web Development" />
+    <meta property="article:tag" content=".NET Core" />
+    <meta property="article:tag" content="Architecture" />
+  
+</head>
+
+<body>
+  <div class="container" id="wrap">
+      <nav id="navbar" class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <!--navbar-header-->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+  
+        <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev">Home</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://nightblade9.github.io/godot-gamedev/pages/about.html">About</a>
+
+        <p class='navbar-brand'>|</p>
+
+          <a class="navbar-brand" href="https://www.deengames.com">Deen Games</a>
+      </div> <!--navbar-header-->
+
+      <!-- Search Box -->
+
+      <!--Menuitems, collapable-->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" id="menuitem-list">
+        </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div> <!--container-->
+  </nav>
+
+    
+    <div class="list-group">
+      </strong>Categories:
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/devlog.html">Devlog</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-design.html">Game Design</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/retrospective.html">Retrospective</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a> |</span>
+        <span><a href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a> |</span>
+    </div>
+
+    <div class="container">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+              <div class="page-header">
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2020/web-application-translation-architecture-in-net.html">Web Application Translation Architecture in .NET</a></h1>
+    </div>
+
+        </div>
+
+        <div class="row">
+
+    <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/web-development.html">Web Development</a>
+      <b> · </b>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/net-core.html">.NET Core</a>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/architecture.html">Architecture</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2020">2020</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2020Month08">08</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2020Month08">11</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+  <hr/>
+
+  <div id="article_content">
+    <p><img alt="globe of languages" src="https://i.imgur.com/bqyLzs1.png?1"></p>
+<p>So you want to localize and internationalize your web application? There are a lot of considerations, but here, we briefly discuss just the translation part.</p>
+<p>This post covers a couple of the architectural/design options and discusses their respective trade-offs. While this is a bit specific to .NET, other languages no doubt provide similar concepts, with various levels of API support (e.g. language stored in cookies)</p>
+<h1>Individual Translations via RESX Files</h1>
+<p>.NET and .NET Core provide some infrastructure called "resource files" (<code>.resx</code>) extension). These are XML files which you can edit directly in Visual Studio; at runtime, they compile down to a binary format. They generally recommend creating a few resource files (one per back-end controller or shared module). Advantages of this approach include:</p>
+<ul>
+<li>Easy editing of the file (in-IDE)</li>
+<li>Easy versioning/history of the file (it's a text format)</li>
+<li>API support for configuring the prefered language in a cookie, etc.</li>
+<li>Localized changes on translation change (no need to re-test everything)</li>
+<li>Efficient, with a small size at runtime</li>
+</ul>
+<p>The disadvantages of this format include:</p>
+<ul>
+<li>Any translation change requires recompiling the entire application</li>
+<li>Editing dozens of files can be very cumbersome</li>
+<li>Difficult to make a translation change and see it immediately in-app (unless you're a developer)</li>
+<li>You can't store any sort of metadata (e.g. notes) with translations</li>
+</ul>
+<p>Overall, I think this approach works well if you plan to update translations periodically and don't need an external translater. (If you do, and they're not a coder, you'll need to make additional tooling to export/import the strings in a format they can understand.)</p>
+<h1>Using a Database for Translations</h1>
+<p>One common alternative approach is to store the translations in a database (relational or otherwise) and simply load/display them at runtime. This confers some additional advantages over resource files:</p>
+<ul>
+<li>Ability to update a translation and instantly see the change in-app</li>
+<li>Ability to store meta-data (like notes) with each message</li>
+<li>You can quickly query to find missing strings in various languages</li>
+<li>Non-technical users can easily edit translations via a simple web UI</li>
+</ul>
+<p>However, it contains some additional downsides:</p>
+<ul>
+<li>You need to write a web UI to allow translators to be able to view/update translations</li>
+<li>Making several database calls just to load one view/page, can be costly in terms of performance</li>
+<li>You can read/cache strings in memory on app-start, but then your app requires additional memory per language</li>
+</ul>
+<p>I think this approach suits situations where you absolutely must be able to see updated translations reflected immediately, or where you have non-technical translators who need an easy way to be able to update translations.</p>
+<p>If you know of any other architectures/designs, drop me a note <a href="https://twitter.com/nightblade99">on Twitter</a> and let me know!</p>
+    
+    <hr />
+<p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
+    
+  </div>
+
+  <hr/>
+
+      <ul class="pager">
+        <li class="previous">
+          <a href="https://nightblade9.github.io/godot-gamedev/2021/a-practical-guide-to-make-your-own-game-engine.html">
+          &laquo; Newer</a>
+        </li>
+        <li class="next">
+          <a href="https://nightblade9.github.io/godot-gamedev/2020/thoroughly-testing-your-game.html">
+          Older &raquo;</a>
+        </li>
+      </ul>
+
+
+        </div>
+
+        <div class="row">
+        </div>
+
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+  </div>
+
+    <nav id="footer" class="navbar navbar-default">
+    <div class="container">
+        <p id="footer-text" class="navbar-text text-center">
+          Copyright &copy; <a href="https://twitter.com/nightblade99">NightBlade</a>, 2018+. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </nav>
+
+
+</body>
+</html>

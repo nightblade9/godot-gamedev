@@ -25,7 +25,19 @@ Running Godot games spawns a console window. By default, this window displays a 
 
 Fortunately, the former displays on `stdout`, and the latter on `stderr`. This provides us with a simple way to run Godot and suppress all text:
 
-`godot_game.x86_64 --quiet 2>/dev/null` (Linux) or `godot_game.exe --quiet 2>out.txt` (Windows). Like magic, nothing will print out to the console, except what you write with `System.Console.WriteLine` (when you export your game) or `GD.Print` (when debugging in the Godot editor).
+- In the Project Settings > Application > Run, check `Disable stderr`. This prevents warnings/errors from being printed.
+- Check `Flush stdout on Print debug`. This means every print statement gets immediately printed.
+
+All this leaves is a way to print output to the console; you can achieve this by creating a warpper method like so:
+
+```C#
+public static void Write(string message) {
+    System.Console.WriteLine(message);
+    Godot.GD.Print(message);
+}
+```
+
+The first line prints only when the game is exported. The second prints only when the game is run in-editor (e.g. debugging). If the `--no-header` argument is implemented, you can also add that to your shell/batch script for running your game to disable the Godot header output; `--quiet` does the same thing.
 
 # User Input
 

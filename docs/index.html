@@ -164,7 +164,18 @@
 </ul>
 <h1>The Solution</h1>
 <p>Fortunately, the former displays on <code>stdout</code>, and the latter on <code>stderr</code>. This provides us with a simple way to run Godot and suppress all text:</p>
-<p><code>godot_game.x86_64 --quiet 2&gt;/dev/null</code> (Linux) or <code>godot_game.exe --quiet 2&gt;out.txt</code> (Windows). Like magic, nothing will print out to the console, except what you write with <code>System.Console.WriteLine</code> (when you export your game) or <code>GD.Print</code> (when debugging in the Godot editor).</p>
+<ul>
+<li>In the Project Settings &gt; Application &gt; Run, check <code>Disable stderr</code>. This prevents warnings/errors from being printed.</li>
+<li>Check <code>Flush stdout on Print debug</code>. This means every print statement gets immediately printed.</li>
+</ul>
+<p>All this leaves is a way to print output to the console; you can achieve this by creating a warpper method like so:</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Write</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Godot</span><span class="p">.</span><span class="n">GD</span><span class="p">.</span><span class="n">Print</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+<p>The first line prints only when the game is exported. The second prints only when the game is run in-editor (e.g. debugging). If the <code>--no-header</code> argument is implemented, you can also add that to your shell/batch script for running your game to disable the Godot header output; <code>--quiet</code> does the same thing.</p>
 <h1>User Input</h1>
 <p>Also, you can read player input with <code>System.Console.ReadLine</code> and friends - but be warned that this freezes the main Godot game. Perhaps running it in a separate thread may work. This makes it simple to build an interactive text game.</p>
 <h1>Going Beyond Text</h1>

@@ -22,7 +22,18 @@
 &lt;/ul&gt;
 &lt;h1&gt;The Solution&lt;/h1&gt;
 &lt;p&gt;Fortunately, the former displays on &lt;code&gt;stdout&lt;/code&gt;, and the latter on &lt;code&gt;stderr&lt;/code&gt;. This provides us with a simple way to run Godot and suppress all text:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;godot_game.x86_64 --quiet 2&amp;gt;/dev/null&lt;/code&gt; (Linux) or &lt;code&gt;godot_game.exe --quiet 2&amp;gt;out.txt&lt;/code&gt; (Windows). Like magic, nothing will print out to the console, except what you write with &lt;code&gt;System.Console.WriteLine&lt;/code&gt; (when you export your game) or &lt;code&gt;GD.Print&lt;/code&gt; (when debugging in the Godot editor).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In the Project Settings &amp;gt; Application &amp;gt; Run, check &lt;code&gt;Disable stderr&lt;/code&gt;. This prevents warnings/errors from being printed.&lt;/li&gt;
+&lt;li&gt;Check &lt;code&gt;Flush stdout on Print debug&lt;/code&gt;. This means every print statement gets immediately printed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All this leaves is a way to print output to the console; you can achieve this by creating a warpper method like so:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;public&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;static&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;Write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteLine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;Godot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GD&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The first line prints only when the game is exported. The second prints only when the game is run in-editor (e.g. debugging). If the &lt;code&gt;--no-header&lt;/code&gt; argument is implemented, you can also add that to your shell/batch script for running your game to disable the Godot header output; &lt;code&gt;--quiet&lt;/code&gt; does the same thing.&lt;/p&gt;
 &lt;h1&gt;User Input&lt;/h1&gt;
 &lt;p&gt;Also, you can read player input with &lt;code&gt;System.Console.ReadLine&lt;/code&gt; and friends - but be warned that this freezes the main Godot game. Perhaps running it in a separate thread may work. This makes it simple to build an interactive text game.&lt;/p&gt;
 &lt;h1&gt;Going Beyond Text&lt;/h1&gt;

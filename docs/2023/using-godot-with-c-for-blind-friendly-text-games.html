@@ -6,7 +6,7 @@
     <meta name="description" content="Godot Game Development">
     <meta name="author" content="nightblade">
 
-        <title>Publishing Godot Games to Steam for MacOS without Hardware · Godot Game Development</title>
+        <title>Using Godot with C# for Blind-Friendly Text Games · Godot Game Development</title>
 
 
     <!-- Bootstrap core CSS -->
@@ -25,16 +25,15 @@
 
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-    <meta property="og:title" content="Publishing Godot Games to Steam for MacOS without Hardware" />
+    <meta property="og:title" content="Using Godot with C# for Blind-Friendly Text Games" />
     <meta property="og:type" content="article" />
-    <meta property="og:image" content="https://i.imgur.com/VXjBne7.png" />
-    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2022/publishing-godot-games-to-steam-for-macos-without-hardware.html" />
-    <meta property="og:description" content="Are you working on a Godot desktop game? Would you like to publish it to MacOS, without the pain of learning about MacOS-specific requirements like signing, notorization, and paying $99/year? The good news is, if you plan to publish your game on Steam, you can easily do this, without …" />
+    <meta property="og:image" content="https://i.imgur.com/WClABct.png" />
+    <meta property="og:url" content="https://nightblade9.github.io/godot-gamedev/2023/using-godot-with-c-for-blind-friendly-text-games.html" />
+    <meta property="og:description" content="I recently found a sweet, sweet solution to using Godot to create text-games for blind-friendly players. This matters because: The performance of Godot&#39;s TTS APIs can vary a lot Console output easily integrates with screen readers Blind players can take advantage of their preferences (voice, speech rate, etc.) and advanced …" />
     <meta property="og:site_name" content="Godot Game Development" />
-    <meta property="article:published_time" content="2022-07-22" />
+    <meta property="article:published_time" content="2023-02-23" />
     <meta property="article:section" content="Technical" />
     <meta property="article:tag" content="Godot" />
-    <meta property="article:tag" content="MacOS" />
   
 </head>
 
@@ -93,7 +92,7 @@
       <div class="col-md-8">
         <div class="row">
               <div class="page-header">
-        <h1><a href="https://nightblade9.github.io/godot-gamedev/2022/publishing-godot-games-to-steam-for-macos-without-hardware.html">Publishing Godot Games to Steam for MacOS without Hardware</a></h1>
+        <h1><a href="https://nightblade9.github.io/godot-gamedev/2023/using-godot-with-c-for-blind-friendly-text-games.html">Using Godot with C# for Blind-Friendly Text Games</a></h1>
     </div>
 
         </div>
@@ -106,11 +105,9 @@
       <b> · </b>
         <a class="label label-primary"
           href="https://nightblade9.github.io/godot-gamedev/tag/godot.html">Godot</a>
-        <a class="label label-primary"
-          href="https://nightblade9.github.io/godot-gamedev/tag/macos.html">MacOS</a>
     <!--<span class="glyphicon glyphicon-calendar"></span>-->
       <b> · </b>
-      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2022">2022</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2022Month07">07</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2022Month07">22</a>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2023">2023</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2023Month02">02</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2023Month02">23</a>
 
     <!--<span class="glyphicon glyphicon-user"></span>-->
       <b> · </b>
@@ -120,30 +117,31 @@
   <hr/>
 
   <div id="article_content">
-    <p><img alt="Godot and Mac" src="https://i.imgur.com/VXjBne7.png"></p>
-<p>Are you working on a Godot desktop game? Would you like to publish it to MacOS, without the pain of learning about MacOS-specific requirements like signing, notorization, and paying $99/year?</p>
-<p>The good news is, if you plan to publish your game on Steam, you can easily do this, without Mac hardware. My inspiration for this is: be the change you want to see in the world. Publish your game for Mac (and Linux), so the market grows, and more great games support these OSes.</p>
-<p>If you're interested in how to do this, skip the section below; if you're interested in how this all works (sort of), the next section gives a very brief overview of the problem.</p>
-<h2>Preamble: Signing, Notarization, and DMG Files</h2>
-<p>I don't pretend to understand how all this works. My understanding, as someone who mainly uses Unix and Windows, is the following:</p>
+    <p><img alt="Picture of a speaker crossed-out" src="https://i.imgur.com/WClABct.png"></p>
+<p>I recently found a sweet, sweet solution to using Godot to create text-games for blind-friendly players. This matters because:</p>
 <ul>
-<li>Like Windows, Mac OS requires developers to "sign" their apps with a cryptographic key of some sort</li>
-<li>Unsigned apps previously run on Mac OS with a warning; as of writing (2022 June), they no longer run at all.</li>
-<li>Notarization is a more scrutenized form of signing, and requires sending your app to Apple to approve</li>
-<li>DMG files are native to Mac, and internally contain an .app file</li>
+<li><a href="https://docs.godotengine.org/en/stable/tutorials/audio/text_to_speech.html#caveats-and-other-information">The performance of Godot's TTS APIs can vary a lot</a></li>
+<li>Console output easily integrates with screen readers</li>
+<li>Blind players can take advantage of their preferences (voice, speech rate, etc.) and advanced screen-reader features (forward, rewind, etc.)</li>
+<li>Godot ships with many strong features for audio games, such as reverb and 2D positional audio.</li>
 </ul>
-<p>The key thing here: the DMG contains an .app "file" (looks like an executable on MacOS), which is actually a zip file. That zip contains your actual binaries.</p>
-<h2>MacOS and Steam</h2>
-<p>Follow these steps:</p>
+<h1>The Problem</h1>
+<p>Running Godot games spawns a console window. By default, this window displays a lot of things we wouldn't want players to see or care about, such as:</p>
 <ul>
-<li>Create a new export profile for Mac. Configure as you like (e.g. exclusion files)</li>
-<li>On a non-Mac system, export your project for Mac. If you're using the CLI, make sure you speify the output file name as a zip file (e.g. <code>Game-MacOS.zip</code>)</li>
-<li>Verify the zip contents: it should have a <code>Game.app</code> directory (with <code>Game</code> replaced with your game name) at the root, with a <code>Contents</code> subdirectory</li>
-<li>Upload that zip to Steam</li>
-<li>Set up your launch options. According to the <a href="https://partner.steamgames.com/doc/sdk/uploading#Initial_Setup_New_App">current Steamworks docs</a>, for MacOS, your <code>Executable</code> should be set to <code>Game.app/Contents/MacOS/Game</code> (replace <code>Game</code> with your actual game name / folder name). </li>
+<li>The version of Godot running</li>
+<li>The renderer used (e.g. Vulkan)</li>
+<li>Warnings generated from our game</li>
+<li>Errors and stack-traces generated from our game</li>
 </ul>
-<p>And that's it! If you launch the game on Mac, it should just work!</p>
-<p>Finally: I recommend you always make sure someone with Mac hardware tests your game to ensure it launches correctly. If you don't have a friend with a Mac, you can always ask me on <a href="https://twitter.com/nightblade99">Twitter</a> or by <a href="mailto:nightbladecodes@gmail.com">email</a> to try it out.</p>
+<h1>The Solution</h1>
+<p>Fortunately, the former displays on <code>stdout</code>, and the latter on <code>stderr</code>. This provides us with a simple way to run Godot and suppress all text:</p>
+<p><code>godot_game.x86_64 --quiet 2&gt;/dev/null</code> (Linux) or <code>godot_game.exe --quiet 2&gt;out.txt</code> (Windows). Like magic, nothing will print out to the console, except what you write with <code>System.Console.WriteLine</code> (when you export your game) or <code>GD.Print</code> (when debugging in the Godot editor).</p>
+<h1>User Input</h1>
+<p>Also, you can read player input with <code>System.Console.ReadLine</code> and friends - but be warned that this freezes the main Godot game. Perhaps running it in a separate thread may work. This makes it simple to build an interactive text game.</p>
+<h1>Going Beyond Text</h1>
+<p>Of course, there's no reason to stick just to text. You can use your main Godot game window to display relevant data, stats, scenes, whatever you like. You can even add buttons and allow users to input using buttons or console text as they see fit. Plus, fancy features like reverb!</p>
+<h1>What's Next</h1>
+<p>While text games aren't the Bee's Knees any more, I would love to see more text-accessible games made in Godot using this approach. If you're interested, check out the <a href="https://itch.io/jam/games-for-blind-gamers-2">Games for Blind Gamers 2 Jam</a>, or follow along on <a href="https://mastodon.gamedev.place/@nightblade9">Mastodon</a> or <a href="https://twitter.com/nightblade9">Twitter</a> as I build a blind-first game using this approach.</p>
     
     <hr />
 <p><strong>Liked our updates?</strong> <a href="https://www.getrevue.co/profile/deengames">Subscribe to our newsletter</a> to get access to our game demos and exclusive insider updates!</p>
@@ -153,12 +151,12 @@
   <hr/>
 
       <ul class="pager">
-        <li class="previous">
-          <a href="https://nightblade9.github.io/godot-gamedev/2023/using-godot-with-c-for-blind-friendly-text-games.html">
+        <li class="previous disabled">
+          <a >
           &laquo; Newer</a>
         </li>
         <li class="next">
-          <a href="https://nightblade9.github.io/godot-gamedev/2022/using-feature-toggles-to-keep-your-demo-code-up-to-date.html">
+          <a href="https://nightblade9.github.io/godot-gamedev/2022/publishing-godot-games-to-steam-for-macos-without-hardware.html">
           Older &raquo;</a>
         </li>
       </ul>

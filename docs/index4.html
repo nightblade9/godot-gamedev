@@ -105,10 +105,112 @@
 
     <div class="panel panel-primary">
       <div class="panel-heading panel-title">
-        <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month06">June</a>
+        <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">September</a>
       <a class="accordion-toggle" data-toggle="collapse" 
         title="toggle folding"
         href="#collapseArticle1">
+        <span class="pull-right badge">
+          #6
+        </span>
+      </a>
+      </div>
+
+      <div class="panel-body hidden">
+
+      </div>
+
+      <ul class="list-group">
+        <a href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html">
+          <li class="list-group-item">
+            <h1>Instance vs. New in Godot</h1>
+          </li>
+        </a>
+        <div class="collapse in"
+          id="collapseArticle1">
+          <li class="list-group-item">
+              <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a>
+      <b> · </b>
+        <a class="label label-primary"
+          href="https://nightblade9.github.io/godot-gamedev/tag/godot.html">Godot</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">09</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">25</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+            <a class="pull-right" href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html">
+              </a>
+          </li>
+          <li class="list-group-item"><p><img alt="godot logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Godot_logo.svg/799px-Godot_logo.svg.png"></p>
+<h2>Summary</h2>
+<p>Godot provides a way to separate the presentation part of game entities from their underlying data. You can think of this as something akin to the Model-View-Controller design pattern, where scripts (classes/code) respresent the model and instanced scenes (sprite, animation, etc.) represent the presentation and control (eg. collision resolution).</p>
+<p>During the development of <a href="https://deengames.itch.io/eman-quest">Eman Quest</a>, we continuously ran into a problem around instancing scenes that are <em>strongly typed</em> and have methods from their corresponding scripts. In fact, there's even <a href="https://github.com/godotengine/godot/issues/15866">an open bug about it</a> as of Godot 3.0.6.</p>
+<p>You can find a description of the problem below, along with the solution, and recommendations.</p>
+<h2>Why This Became a Problem</h2>
+<p>We created Eman Quest as a procedurally-generated RPG; the idea is to generate a persistent, complete world (maps, enemies, etc.) By itself, this proves to be an interesting and troublesome problem to solve, because:</p>
+<ul>
+<li>In Godot, everything is a scene. Your world map, forest map, etc. are scenes.</li>
+<li>You can't easily persist scenes or their entities.</li>
+<li>When you change scenes, the old scene -- and all entities -- get garbage-collected.</li>
+<li>Fundamentally, you need to separate <em>data from the view/presentation.</em> </li>
+</ul>
+<p>To solve this, we started initially by generating scenes and saving those; when the GC reared it's dragonish head, we instead moved to saving data as arbitrary JSON (dictionaries) of key/value pairs; when this required maintaining a set of properties twice (eg. monster strength in JSON vs. strength attribute in the instanced scene), we finally moved to <em>creating scenes and matching scripts/classes.</em></p>
+<p>Then we broke Godot.</p>
+<h2>The Problem and Symptoms</h2>
+<p>Near the middle of development, while creating a <code>TreasureChest</code> class, I ran into an interesting problem: although my script file defined several methods and properties (like <code>.open()</code> or <code>.contents</code>), I couldn't call any of them; Godot complained:</p>
+<blockquote>
+<p>Invalid set index 'contents' (on base: StaticBody2D') with value of type 'Nil'</p>
+</blockquote>
+<p>Godot identified/typed the instance as <code>StaticBody2D</code>, not <code>TreasureChest</code>. Why?</p>
+<p>It turns out the answer lies in the two methods Godot offers to create objects: <code>.instance</code> and <code>.new</code></p>
+<h2>Scenes vs. Scripts as Classes</h2>
+<p>Naively, Godot offers two ways to create an entity: <code>instance</code> and <code>new</code>.</p>
+<p>If it's a <code>Scene</code> with sub-objects (such as a <code>Sprite</code>), you load/preload the <code>.tscn</code>, and call <code>instance</code>. For example: <code>var treasure_chest = load("res://Entities/TreasureChest.tscn").instance()</code>. </p>
+<p>This creates the entire hierarchy of sub-scenes. When you call <code>add_child</code> to add it to the scene, Godot calls the <code>_ready</code> function; this is where you put <em>constructor-like</em> code.</p>
+<p>Alternatively, if you just have a "class" defined in a script, you load/preload the <code>.gd</code> file and call <code>new</code> on it. For example: <code>var treasure_chest = load("res://Entities/TreasureChest.gd").new(contents, coordinates, etc.)</code>. </p>
+<p>In the latter case, you define an <code>_init</code> function for a constructor, and specify whatever parameters you like. This conveniently allows you to specify state and guarantee invariants, such as "treasure chests always have non-null contents."</p>
+<p>However, <em>Godot breaks when you cross these two together.</em> If you load a <code>.tscn</code> definition and then call <code>instance</code>, and <em>the class/script back-end has an <code>_init</code> function,</em> the instanced scene doesn't have any of the scripts defined methods/properties.</p>
+<h2>Solution and Combining the Two Approaches</h2>
+<p>This <em>could</em> be because of timing (when in the life-cycle we're creating the script), I don't know. What I do know, is that removing <code>_init</code> fixes the problem. But then, how do we re-add initialization of the entity's state?</p>
+<p>For entities where we use both the instanced scene (in the place where we populate the tilemaps, etc. on-screen) and the script only (as the generated back-end data/object), we decided on the following approach:</p>
+<ul>
+<li>Don't use <code>_init</code>. It could lead to this obscure bug again later, and suck up a ton of time to figure out.</li>
+<li>To construct a new object class/script instance, create an <code>initialize</code> method and use that as the constructor. This is where we can set state/invariants, etc.</li>
+<li>Keep a single scene for the presentation, and use a script to keep all the back-end class code (properties/methods)</li>
+<li>When we need to instance the actual scene tree for that object -- such as with monsters or treasure chests -- keep the data object separate, and create an <code>initialize_from</code> instance.</li>
+<li><code>initialize_from</code> sets all the properties on the scene (such as presentation: is the treasure chest already opened or not?) based on the properties of the class/data object underlying.</li>
+</ul>
+<p>This approach also solved other problems, such as keeping references to instances across scenes. Godot doesn't like this, because it tries to GC everything. Storing the data separately neatly (sometimes in a singleton script) solves this problem.</p>
+<h2>Conclusion and Future Improvements</h2>
+<p>This solution solves our problem neatly. It keeps our code DRY, by using one definition of an entity's properties. It allows us to separate presentation from model/data, which is useful to prevent coupling.</p>
+<p>But, it's not ideal. At best, we can use <code>_init</code> judiciously for entities that we know we'll never show in a scene. We can always resort to using data (dictionaries/JSON) instead of classes; we miss out on code completion, but this better represents entity-component systems with data-driven design.</p>
+<p>Did you ever run into this problem? Do you see a better way of solving it? Drop a comment and let us know, we would really love to hear about better solutions to this problem.</p></li>
+          <li class="list-group-item text-right">
+            <div class="btn-group">
+              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html#disqus_thread" title="comments">
+                <span class="glyphicon glyphicon-comment" data-disqus-identifier="instance-vs-new-in-godot">
+                </span></a>
+              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html" title="permanent link">
+                <span class="glyphicon glyphicon-link"></span></a>
+              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html" title="read more">
+                <span class="glyphicon glyphicon-plus"></span></a>
+            </div>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading panel-title">
+        <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month06">June</a>
+      <a class="accordion-toggle" data-toggle="collapse" 
+        title="toggle folding"
+        href="#collapseArticle2">
         <span class="pull-right badge">
           #5
         </span>
@@ -126,7 +228,7 @@
           </li>
         </a>
         <div class="collapse in"
-          id="collapseArticle1">
+          id="collapseArticle2">
           <li class="list-group-item">
               <span id="article_info">
     <a class="label label-primary"
@@ -176,7 +278,7 @@
         <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month05">May</a>
       <a class="accordion-toggle" data-toggle="collapse" 
         title="toggle folding"
-        href="#collapseArticle2">
+        href="#collapseArticle3">
         <span class="pull-right badge">
           #4
         </span>
@@ -194,7 +296,7 @@
           </li>
         </a>
         <div class="collapse in"
-          id="collapseArticle2">
+          id="collapseArticle3">
           <li class="list-group-item">
               <span id="article_info">
     <a class="label label-primary"
@@ -255,7 +357,7 @@
         <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month05">May</a>
       <a class="accordion-toggle" data-toggle="collapse" 
         title="toggle folding"
-        href="#collapseArticle3">
+        href="#collapseArticle4">
         <span class="pull-right badge">
           #3
         </span>
@@ -273,7 +375,7 @@
           </li>
         </a>
         <div class="collapse in"
-          id="collapseArticle3">
+          id="collapseArticle4">
           <li class="list-group-item">
               <span id="article_info">
     <a class="label label-primary"
@@ -350,7 +452,7 @@ with your thoughts.</p></li>
         <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month05">May</a>
       <a class="accordion-toggle" data-toggle="collapse" 
         title="toggle folding"
-        href="#collapseArticle4">
+        href="#collapseArticle5">
         <span class="pull-right badge">
           #2
         </span>
@@ -368,7 +470,7 @@ with your thoughts.</p></li>
           </li>
         </a>
         <div class="collapse in"
-          id="collapseArticle4">
+          id="collapseArticle5">
           <li class="list-group-item">
               <span id="article_info">
     <a class="label label-primary"
@@ -501,64 +603,6 @@ with your thoughts.</p></li>
         </div>
       </ul>
     </div>
-
-    <div class="panel panel-primary">
-      <div class="panel-heading panel-title">
-        <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month04">April</a>
-      <a class="accordion-toggle" data-toggle="collapse" 
-        title="toggle folding"
-        href="#collapseArticle5">
-        <span class="pull-right badge">
-          #1
-        </span>
-      </a>
-      </div>
-
-      <div class="panel-body hidden">
-
-      </div>
-
-      <ul class="list-group">
-        <a href="https://nightblade9.github.io/godot-gamedev/2018/blog-refresh.html">
-          <li class="list-group-item">
-            <h1>Blog Refresh</h1>
-          </li>
-        </a>
-        <div class="collapse in"
-          id="collapseArticle5">
-          <li class="list-group-item">
-              <span id="article_info">
-    <a class="label label-primary"
-      href="https://nightblade9.github.io/godot-gamedev/category/news.html">News</a>
-    <!--<span class="glyphicon glyphicon-calendar"></span>-->
-      <b> · </b>
-      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month04">04</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month04">04</a>
-
-    <!--<span class="glyphicon glyphicon-user"></span>-->
-      <b> · </b>
-    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
-  </span>
-
-            <a class="pull-right" href="https://nightblade9.github.io/godot-gamedev/2018/blog-refresh.html">
-              </a>
-          </li>
-          <li class="list-group-item"><p>After a few months of stagnation on the blogging/marketing side, we're finally back! We hope, inshaAllah (God willing) to publish regular (or at least semi-regular) updates to our blog and our <a href="https://twitter.com/nightblade9">current maintainer's Twitter account</a>.</p>
-<p>Accordingly, we also ditched our old, homebrew-coded blog for something sleek and production-grade (built in <a href="https://github.com/getpelican/">Pelican</a>) blog.</p>
-<p>Enjoy, and as usual, hit us up on Twitter to let us know what you think.</p></li>
-          <li class="list-group-item text-right">
-            <div class="btn-group">
-              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/blog-refresh.html#disqus_thread" title="comments">
-                <span class="glyphicon glyphicon-comment" data-disqus-identifier="blog-refresh">
-                </span></a>
-              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/blog-refresh.html" title="permanent link">
-                <span class="glyphicon glyphicon-link"></span></a>
-              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/blog-refresh.html" title="read more">
-                <span class="glyphicon glyphicon-plus"></span></a>
-            </div>
-          </li>
-        </div>
-      </ul>
-    </div>
   </div>
         </div>
 
@@ -581,9 +625,12 @@ with your thoughts.</p></li>
         <li class="active">
           <a>4<span class="sr-only">(current)</span></a>
         </li>
+        <li>
+          <a href="https://nightblade9.github.io/godot-gamedev/index5.html">5<span class="sr-only">(current)</span></a>
+        </li>
 
-        <li class="disabled">
-          <a>&raquo;</a>
+        <li>
+          <a href="index5.html">&raquo;</a>
         </li>
 
     </ul>

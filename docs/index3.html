@@ -105,10 +105,140 @@
 
     <div class="panel panel-primary">
       <div class="panel-heading panel-title">
-        <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month04">April</a>
+        <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month05">May</a>
       <a class="accordion-toggle" data-toggle="collapse" 
         title="toggle folding"
         href="#collapseArticle1">
+        <span class="pull-right badge">
+          #11
+        </span>
+      </a>
+      </div>
+
+      <div class="panel-body hidden">
+
+      </div>
+
+      <ul class="list-group">
+        <a href="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html">
+          <li class="list-group-item">
+            <h1>Getting Started with Unit and Integration Testing in Godot</h1>
+          </li>
+        </a>
+        <div class="collapse in"
+          id="collapseArticle1">
+          <li class="list-group-item">
+              <span id="article_info">
+    <a class="label label-primary"
+      href="https://nightblade9.github.io/godot-gamedev/category/game-development.html">Game Development</a>
+    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+      <b> · </b>
+      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month05">05</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month05">13</a>
+
+    <!--<span class="glyphicon glyphicon-user"></span>-->
+      <b> · </b>
+    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
+  </span>
+
+            <a class="pull-right" href="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html">
+              </a>
+          </li>
+          <li class="list-group-item"><p><img alt="screenshot with code on top" src="https://i.imgur.com/F3hoasj.jpg">
+(Image credit: <a href="https://godotengine.org/article/tests-needed-godot-2-1-4-beta">Godot blog</a>)</p>
+<p>Godot affords the possibility of unit and integration testing <code>gdscript</code> code via the GUT extension. If you're getting started with unit/integrated testing (collectively "automated testing") or Godot, and interested in what automated testing can do for you, read on.</p>
+<h1>What is Automated Testing and Why do I Care?</h1>
+<p>Your game contains lots of logic. When you make changes, you need to re-test that everything that worked before, still works (nothing broke). As you find and fix bugs, and get into corner-cases of your game (eg. testing the entire play-through), manually re-testing everything becomes more and more time-consuming.</p>
+<p>Automated testing provides a solution to these problems: what if you could <em>write code</em> that would test your game code? What if that code could run through all the necessary scenarios of your game in a matter of minutes, or seconds? What if you could run the tests after every single change, and be sure that you never broke anything?</p>
+<p>Automated testing provides exactly this benefit. You write test-code that tests your "production" code. Unit tests, which test very small levels of functionality, run in in a matter of milliseconds; integration tests, which typically test workflows (fight monster, get experience, level up, spend skill points) take longer, but allow you to automate workflows.</p>
+<p>Finally, any experienced developer with automated testing will agree: the <em>mindset change</em> you get from automated testing is unparalleled. Not only can you test <em>every single line of code</em> you change, making sure it works, but you can also make bigger, riskier changes, because of your safety-net of unit tests. You can actually go faster, and make bigger changes, with your safety net of automated tests.</p>
+<h1>The Downside of Automated Testing</h1>
+<p>Like many things, automated testing is a trade-off. Unit testing is the de-facto standard now in the software industry, so we happily accept the downsides in exchange for the wealth of benefits we receive. Regardless, here they are:</p>
+<ul>
+<li><strong>Automated tests take time to write.</strong> You could be writing production code instead! For very tiny projects, proof-of-concepts, prototypes, and simple applications, you may not care about testing at all.</li>
+<li><strong>Writing testable code changes your code.</strong> Your code ends up being more decoupled, more isolated, and more testable. While these are all good software engineering practices, some communities look down on this.</li>
+<li><strong>Flaky tests.</strong> Poorly-written integration tests (and sometimes unit tests) can fail on and off, sometimes for reasons not related to your change. (As you become more experienced with testing, you learn how to write less-flaky tests.)</li>
+<li><strong>Major refactoring is expensive.</strong> If you decide to change a significant amount of code - like moving a method from one place to another, or significantly changing functionality - you now need to pay the cost of updating lots of broken tests.</li>
+</ul>
+<p>Overall, the benefits heavily outweigh the costs. There's really no reason not to write automated tests!</p>
+<h1>Unit vs. Integration Testing</h1>
+<p>We touched earlier on the difference between unit and integration tests. Typically, unit tests test a single method or class. The hallmark of unit tests, is that they don't depend on anything external - they don't touch the database, the file-system, they don't make web-service calls, etc. Because of this, unit tests tend to be extremely stable and robust, and run in sub-millisecond time. A large suite of thousands of unit tests may run in just a few seconds.</p>
+<p>However, unit tests, by nature, test only a very limited set of functionality. Integration tests, in contrast, typically test more complex scenarios, and/or workflows.</p>
+<p>Imagine we wrote an RPG-style game. The user can battle monsters; on victory, he receives experience points, and can use those to invest in learning new skills.  If we structured this as typical domain-driven classes (such as <code>Player</code>, <code>Monster</code>, etc.) we might write unit tests such as:</p>
+<ul>
+<li><code>Player.attack(target)</code> damages the target</li>
+<li><code>Player.hurt(damage)</code> decreases health</li>
+<li><code>Player.hurt(damage)</code> throws an error if damage is less than zero (programmer bug)</li>
+</ul>
+<p>These are all class/object/method-level tests. In contrast, we might write integration tests such as:</p>
+<ul>
+<li>When a player fights an enemy and defeats it, the player receives experience points</li>
+<li>When the player receives enough XP, they level up and gain skill points</li>
+<li>When monsters defeat the player, the game reaches a "game over" state</li>
+</ul>
+<p>These tests, by nature, work with a larger set of code - so you can test more things. But, they can also be more fragile - if something breaks in the workflow (damage calculation broken? Level-up calculation broken? Skill-points UI broken?), the test can fail.</p>
+<h1>Godot with  Mono vs. GDscript</h1>
+<p>Godot provides two options for unit testing, depending on whether you prefer C# or GDscript.</p>
+<p>If you prefer C#, create your project as a Godot + Mono project, and write as much logic as possible in the C# code. This way, you can use the "usual" set of C# testing tools (NUnit, Moq, etc.) and everything Just Works.</p>
+<p>If you can't, won't, or prefer GDscript, you can use the GUT extension. (GUT stands for Godot Unit Test.)</p>
+<h1>Getting Started Testing (with Gut)</h1>
+<p>The <a href="https://github.com/bitwes/Gut">GUT project page on GitHub</a> provides a <a href="https://github.com/bitwes/Gut/wiki/Install">detailed explanation of getting started</a>, which I won't repeat here. Install GUT in your project, create a new scene with the <code>Gut</code> object, and you're ready to go.</p>
+<p>Instead, I'll focus on getting started testing: what do you test? Assuming you have an existing project with an extensive code-base and zero unit tests, what do you do?</p>
+<p>Fundamentally, you need to start doing two things:</p>
+<p>1) Refactor your code to make it more testable
+2) Write tests for any new code</p>
+<p>We didn't really touch on testable code in any depth. The short version is: write simple classes with simple methods, and avoid dependencies on any external "things." For example, if your <code>Player.damage</code> class depends on a <code>Globals.battle_difficulty</code> multiplier, accept it as a passed-in value instead of referencing the <code>Globals</code> script. Change this:</p>
+<div class="highlight"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="n">player</span><span class="o">.</span><span class="n">gd</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="n">damage</span><span class="p">(</span><span class="n">target</span><span class="p">):</span><span class="w"></span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">total_defense</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target</span><span class="o">.</span><span class="n">defense</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Globals</span><span class="o">.</span><span class="n">battle_difficulty</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">target</span><span class="o">.</span><span class="n">current_health</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">strength</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">total_defense</span><span class="w"></span>
+
+<span class="o">//</span><span class="w"> </span><span class="n">Elsewhere</span><span class="w"></span>
+<span class="n">player</span><span class="o">.</span><span class="n">damage</span><span class="p">(</span><span class="n">selected_monster</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<p>To this:</p>
+<div class="highlight"><pre><span></span><code><span class="o">//</span><span class="w"> </span><span class="n">player</span><span class="o">.</span><span class="n">gd</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="n">damage</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">battle_difficulty</span><span class="p">):</span><span class="w"></span>
+<span class="w">  </span><span class="k">var</span><span class="w"> </span><span class="n">total_defense</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target</span><span class="o">.</span><span class="n">defense</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">battle_difficulty</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">target</span><span class="o">.</span><span class="n">current_health</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">strength</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">total_defense</span><span class="w"></span>
+
+<span class="o">//</span><span class="w"> </span><span class="n">Elsewhere</span><span class="w"></span>
+<span class="n">player</span><span class="o">.</span><span class="n">damage</span><span class="p">(</span><span class="n">selected_monster</span><span class="p">,</span><span class="w"> </span><span class="n">Globals</span><span class="o">.</span><span class="n">battle_difficulty</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<p>While the code is functionally equivalent, the latter is far more testable: you can pass in whatever value of <code>battle_difficutly</code> you want in your tests, even invalid values like -3! In fact, this is the kind of functionality you want to unit-test: in addition to making sure it works with a correct difficulty, you can test that it fails appropriately (eg. throws an error or returns 0) with an invalid value - something you can't easily test through the actual game.</p>
+<h1>In Conclusion</h1>
+<p>We covered a lot of ground in this article.  In summary:</p>
+<ul>
+<li>We talked about automated testing, and why we care about it at all</li>
+<li>We looked at some of the benefits and advantages of unit-testing</li>
+<li>We touched on some of the downsides, most of which are not really disadvantageous</li>
+<li>We looked at unit vs. integration tests, and one way to define integration tests as workflows</li>
+<li>We covered testing with C# (in brief) vs. testing GDscript with Godot</li>
+<li>We looked at writing a few simple unit tests on a player class, and making code more testable</li>
+</ul>
+<p>I hope this post benefited you, and convinced you to at least try unit testing! Please let me know your feedback <a href="https://twitter.com/nightblade99">on Twitter</a> - whether you decide to try testing, what you didn't understand, and what kind of topics you would like me to cover in future articles on Godot and testing.</p></li>
+          <li class="list-group-item text-right">
+            <div class="btn-group">
+              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html#disqus_thread" title="comments">
+                <span class="glyphicon glyphicon-comment" data-disqus-identifier="getting-started-with-unit-and-integration-testing-in-godot">
+                </span></a>
+              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html" title="permanent link">
+                <span class="glyphicon glyphicon-link"></span></a>
+              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2019/getting-started-with-unit-and-integration-testing-in-godot.html" title="read more">
+                <span class="glyphicon glyphicon-plus"></span></a>
+            </div>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading panel-title">
+        <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month04">April</a>
+      <a class="accordion-toggle" data-toggle="collapse" 
+        title="toggle folding"
+        href="#collapseArticle2">
         <span class="pull-right badge">
           #10
         </span>
@@ -126,7 +256,7 @@
           </li>
         </a>
         <div class="collapse in"
-          id="collapseArticle1">
+          id="collapseArticle2">
           <li class="list-group-item">
               <span id="article_info">
     <a class="label label-primary"
@@ -178,7 +308,7 @@
         <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019">2019</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2019Month03">March</a>
       <a class="accordion-toggle" data-toggle="collapse" 
         title="toggle folding"
-        href="#collapseArticle2">
+        href="#collapseArticle3">
         <span class="pull-right badge">
           #9
         </span>
@@ -196,7 +326,7 @@
           </li>
         </a>
         <div class="collapse in"
-          id="collapseArticle2">
+          id="collapseArticle3">
           <li class="list-group-item">
               <span id="article_info">
     <a class="label label-primary"
@@ -277,7 +407,7 @@
         <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month10">October</a>
       <a class="accordion-toggle" data-toggle="collapse" 
         title="toggle folding"
-        href="#collapseArticle3">
+        href="#collapseArticle4">
         <span class="pull-right badge">
           #8
         </span>
@@ -295,7 +425,7 @@
           </li>
         </a>
         <div class="collapse in"
-          id="collapseArticle3">
+          id="collapseArticle4">
           <li class="list-group-item">
               <span id="article_info">
     <a class="label label-primary"
@@ -383,7 +513,7 @@
         <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">September</a>
       <a class="accordion-toggle" data-toggle="collapse" 
         title="toggle folding"
-        href="#collapseArticle4">
+        href="#collapseArticle5">
         <span class="pull-right badge">
           #7
         </span>
@@ -401,7 +531,7 @@
           </li>
         </a>
         <div class="collapse in"
-          id="collapseArticle4">
+          id="collapseArticle5">
           <li class="list-group-item">
               <span id="article_info">
     <a class="label label-primary"
@@ -475,108 +605,6 @@
         </div>
       </ul>
     </div>
-
-    <div class="panel panel-primary">
-      <div class="panel-heading panel-title">
-        <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a> - <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">September</a>
-      <a class="accordion-toggle" data-toggle="collapse" 
-        title="toggle folding"
-        href="#collapseArticle5">
-        <span class="pull-right badge">
-          #6
-        </span>
-      </a>
-      </div>
-
-      <div class="panel-body hidden">
-
-      </div>
-
-      <ul class="list-group">
-        <a href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html">
-          <li class="list-group-item">
-            <h1>Instance vs. New in Godot</h1>
-          </li>
-        </a>
-        <div class="collapse in"
-          id="collapseArticle5">
-          <li class="list-group-item">
-              <span id="article_info">
-    <a class="label label-primary"
-      href="https://nightblade9.github.io/godot-gamedev/category/technical.html">Technical</a>
-      <b> · </b>
-        <a class="label label-primary"
-          href="https://nightblade9.github.io/godot-gamedev/tag/godot.html">Godot</a>
-    <!--<span class="glyphicon glyphicon-calendar"></span>-->
-      <b> · </b>
-      <a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018">2018</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">09</a>-<a href="https://nightblade9.github.io/godot-gamedev/archives.html#Year2018Month09">25</a>
-
-    <!--<span class="glyphicon glyphicon-user"></span>-->
-      <b> · </b>
-    <a href="https://nightblade9.github.io/godot-gamedev/author/nightblade.html">nightblade</a>
-  </span>
-
-            <a class="pull-right" href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html">
-              </a>
-          </li>
-          <li class="list-group-item"><p><img alt="godot logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Godot_logo.svg/799px-Godot_logo.svg.png"></p>
-<h2>Summary</h2>
-<p>Godot provides a way to separate the presentation part of game entities from their underlying data. You can think of this as something akin to the Model-View-Controller design pattern, where scripts (classes/code) respresent the model and instanced scenes (sprite, animation, etc.) represent the presentation and control (eg. collision resolution).</p>
-<p>During the development of <a href="https://deengames.itch.io/eman-quest">Eman Quest</a>, we continuously ran into a problem around instancing scenes that are <em>strongly typed</em> and have methods from their corresponding scripts. In fact, there's even <a href="https://github.com/godotengine/godot/issues/15866">an open bug about it</a> as of Godot 3.0.6.</p>
-<p>You can find a description of the problem below, along with the solution, and recommendations.</p>
-<h2>Why This Became a Problem</h2>
-<p>We created Eman Quest as a procedurally-generated RPG; the idea is to generate a persistent, complete world (maps, enemies, etc.) By itself, this proves to be an interesting and troublesome problem to solve, because:</p>
-<ul>
-<li>In Godot, everything is a scene. Your world map, forest map, etc. are scenes.</li>
-<li>You can't easily persist scenes or their entities.</li>
-<li>When you change scenes, the old scene -- and all entities -- get garbage-collected.</li>
-<li>Fundamentally, you need to separate <em>data from the view/presentation.</em> </li>
-</ul>
-<p>To solve this, we started initially by generating scenes and saving those; when the GC reared it's dragonish head, we instead moved to saving data as arbitrary JSON (dictionaries) of key/value pairs; when this required maintaining a set of properties twice (eg. monster strength in JSON vs. strength attribute in the instanced scene), we finally moved to <em>creating scenes and matching scripts/classes.</em></p>
-<p>Then we broke Godot.</p>
-<h2>The Problem and Symptoms</h2>
-<p>Near the middle of development, while creating a <code>TreasureChest</code> class, I ran into an interesting problem: although my script file defined several methods and properties (like <code>.open()</code> or <code>.contents</code>), I couldn't call any of them; Godot complained:</p>
-<blockquote>
-<p>Invalid set index 'contents' (on base: StaticBody2D') with value of type 'Nil'</p>
-</blockquote>
-<p>Godot identified/typed the instance as <code>StaticBody2D</code>, not <code>TreasureChest</code>. Why?</p>
-<p>It turns out the answer lies in the two methods Godot offers to create objects: <code>.instance</code> and <code>.new</code></p>
-<h2>Scenes vs. Scripts as Classes</h2>
-<p>Naively, Godot offers two ways to create an entity: <code>instance</code> and <code>new</code>.</p>
-<p>If it's a <code>Scene</code> with sub-objects (such as a <code>Sprite</code>), you load/preload the <code>.tscn</code>, and call <code>instance</code>. For example: <code>var treasure_chest = load("res://Entities/TreasureChest.tscn").instance()</code>. </p>
-<p>This creates the entire hierarchy of sub-scenes. When you call <code>add_child</code> to add it to the scene, Godot calls the <code>_ready</code> function; this is where you put <em>constructor-like</em> code.</p>
-<p>Alternatively, if you just have a "class" defined in a script, you load/preload the <code>.gd</code> file and call <code>new</code> on it. For example: <code>var treasure_chest = load("res://Entities/TreasureChest.gd").new(contents, coordinates, etc.)</code>. </p>
-<p>In the latter case, you define an <code>_init</code> function for a constructor, and specify whatever parameters you like. This conveniently allows you to specify state and guarantee invariants, such as "treasure chests always have non-null contents."</p>
-<p>However, <em>Godot breaks when you cross these two together.</em> If you load a <code>.tscn</code> definition and then call <code>instance</code>, and <em>the class/script back-end has an <code>_init</code> function,</em> the instanced scene doesn't have any of the scripts defined methods/properties.</p>
-<h2>Solution and Combining the Two Approaches</h2>
-<p>This <em>could</em> be because of timing (when in the life-cycle we're creating the script), I don't know. What I do know, is that removing <code>_init</code> fixes the problem. But then, how do we re-add initialization of the entity's state?</p>
-<p>For entities where we use both the instanced scene (in the place where we populate the tilemaps, etc. on-screen) and the script only (as the generated back-end data/object), we decided on the following approach:</p>
-<ul>
-<li>Don't use <code>_init</code>. It could lead to this obscure bug again later, and suck up a ton of time to figure out.</li>
-<li>To construct a new object class/script instance, create an <code>initialize</code> method and use that as the constructor. This is where we can set state/invariants, etc.</li>
-<li>Keep a single scene for the presentation, and use a script to keep all the back-end class code (properties/methods)</li>
-<li>When we need to instance the actual scene tree for that object -- such as with monsters or treasure chests -- keep the data object separate, and create an <code>initialize_from</code> instance.</li>
-<li><code>initialize_from</code> sets all the properties on the scene (such as presentation: is the treasure chest already opened or not?) based on the properties of the class/data object underlying.</li>
-</ul>
-<p>This approach also solved other problems, such as keeping references to instances across scenes. Godot doesn't like this, because it tries to GC everything. Storing the data separately neatly (sometimes in a singleton script) solves this problem.</p>
-<h2>Conclusion and Future Improvements</h2>
-<p>This solution solves our problem neatly. It keeps our code DRY, by using one definition of an entity's properties. It allows us to separate presentation from model/data, which is useful to prevent coupling.</p>
-<p>But, it's not ideal. At best, we can use <code>_init</code> judiciously for entities that we know we'll never show in a scene. We can always resort to using data (dictionaries/JSON) instead of classes; we miss out on code completion, but this better represents entity-component systems with data-driven design.</p>
-<p>Did you ever run into this problem? Do you see a better way of solving it? Drop a comment and let us know, we would really love to hear about better solutions to this problem.</p></li>
-          <li class="list-group-item text-right">
-            <div class="btn-group">
-              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html#disqus_thread" title="comments">
-                <span class="glyphicon glyphicon-comment" data-disqus-identifier="instance-vs-new-in-godot">
-                </span></a>
-              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html" title="permanent link">
-                <span class="glyphicon glyphicon-link"></span></a>
-              <a class="btn btn-primary" href="https://nightblade9.github.io/godot-gamedev/2018/instance-vs-new-in-godot.html" title="read more">
-                <span class="glyphicon glyphicon-plus"></span></a>
-            </div>
-          </li>
-        </div>
-      </ul>
-    </div>
   </div>
         </div>
 
@@ -598,6 +626,9 @@
         </li>
         <li>
           <a href="https://nightblade9.github.io/godot-gamedev/index4.html">4<span class="sr-only">(current)</span></a>
+        </li>
+        <li>
+          <a href="https://nightblade9.github.io/godot-gamedev/index5.html">5<span class="sr-only">(current)</span></a>
         </li>
 
         <li>
